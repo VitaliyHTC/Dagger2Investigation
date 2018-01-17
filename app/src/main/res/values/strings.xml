@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Dagger2Investigation</string>
+    <string name="product_list_item_image_preview">Product image</string>
+</resources>
