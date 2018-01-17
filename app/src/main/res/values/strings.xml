@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Dagger2Investigation</string>
     <string name="product_list_item_image_preview">Product image</string>
+    <string name="products_details_dialog_product_image">Product image</string>
+
+    <string name="product_value_def">_</string>
+    <string name="product_key_name">Name:</string>
+    <string name="product_key_tags">Tags:</string>
+    <string name="product_key_id">Product ID:</string>
+    <string name="product_key_price_in_cents">Price in cents:</string>
+    <string name="product_key_regular_price_in_cents">Regular price in cents:</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.vitaliyhtc.dagger2investigation;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,8 @@ import com.vitaliyhtc.dagger2investigation.view.adapter.ProductsListAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.vitaliyhtc.dagger2investigation.Config.KEY_PRODUCT_ID;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     private void onProductClick1(int productId) {
-        //TODO: implement
+        mMainPresenter.onProductClick(productId);
     }
 
     private void loadData() {
@@ -98,5 +101,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     public void loadProductsError(Throwable t) {
         Toast.makeText(this, "ERROR: " + t.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void launchProductDetailsActivity(int productId) {
+        //TODO: implement
+        Intent intent = new Intent(this, ProductDetailsActivity.class);
+        intent.putExtra(KEY_PRODUCT_ID, productId);
+        startActivity(intent);
     }
 }
