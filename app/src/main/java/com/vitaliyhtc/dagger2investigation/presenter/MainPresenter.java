@@ -1,6 +1,5 @@
 package com.vitaliyhtc.dagger2investigation.presenter;
 
-import com.vitaliyhtc.dagger2investigation.data.model.mapper.ProductMapper;
 import com.vitaliyhtc.dagger2investigation.domain.ProductRepository;
 import com.vitaliyhtc.dagger2investigation.domain.RxFilter;
 import com.vitaliyhtc.dagger2investigation.domain.model.Product;
@@ -56,16 +55,21 @@ public class MainPresenter implements BasePresenter<MainView> {
                         .flatMap(Observable::fromIterable)
                         .filter(filter::isMeetsCondition)
                         .observeOn(AndroidSchedulers.mainThread())
+                        // TODO: 1/17/18 collect all data and deliver everything
+//                        .toList()
                         .subscribe(
-                                product -> {
-                                    if (mCountProducts < count) {
-                                        addProductToResult(product);
-                                        mCountProducts++;
-                                    }
-                                },
+                                // TODO: 1/17/18 don't write here large implementations
+                                product -> onProductReceived(product, count),
                                 this::loadProductsError
                         );
         mCompositeDisposable.add(disposable);
+    }
+
+    private void onProductReceived(Product product, int count) {
+        if (mCountProducts < count) {
+            addProductToResult(product);
+            mCountProducts++;
+        }
     }
 
     private void addProductToResult(Product product) {

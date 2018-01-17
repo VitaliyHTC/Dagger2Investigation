@@ -7,6 +7,8 @@ import java.util.List;
 import io.reactivex.Observable;
 
 public interface ProductRepository {
+
     Observable<List<Product>> getProductsObservable(int page);
+
     Observable<Product> getOneProductsObservable(int productId);
 }

@@ -7,10 +7,12 @@ import com.vitaliyhtc.dagger2investigation.di.component.DaggerProductDataCompone
 import com.vitaliyhtc.dagger2investigation.di.component.ProductDataComponent;
 import com.vitaliyhtc.dagger2investigation.di.module.ContextModule;
 
+// TODO: 1/17/18 avoid Main- prefixes
 public class MainApplication extends Application {
 
     private ProductDataComponent mProductDataComponent;
 
+    // TODO: 1/17/18 why not singleton?
     public static MainApplication get(Activity activity) {
         return (MainApplication) activity.getApplication();
     }

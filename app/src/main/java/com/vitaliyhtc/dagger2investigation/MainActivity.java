@@ -1,7 +1,7 @@
 package com.vitaliyhtc.dagger2investigation;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -14,7 +14,6 @@ import com.vitaliyhtc.dagger2investigation.domain.ProductRepository;
 import com.vitaliyhtc.dagger2investigation.domain.model.Product;
 import com.vitaliyhtc.dagger2investigation.presenter.MainPresenter;
 import com.vitaliyhtc.dagger2investigation.view.MainView;
-import com.vitaliyhtc.dagger2investigation.view.adapter.OnProductClickListener;
 import com.vitaliyhtc.dagger2investigation.view.adapter.ProductsListAdapter;
 
 import butterknife.BindView;
@@ -28,13 +27,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     ProductsListAdapter mProductsListAdapter;
 
-    OnProductClickListener mOnProductClickListener =
-            new OnProductClickListener() {
-                @Override
-                public void onProductClick(int productId) {
-                    onProductClick1(productId);
-                }
-            };
+
 
     @BindView(R.id.rv_recyclerView)
     RecyclerView mRecyclerView;
@@ -50,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         initDi();
 
         setAdapter();
-
+        // TODO: 1/17/18 we need to talk about this
         mMainPresenter = new MainPresenter(mProductRepository);
         mMainPresenter.onAttachView(this);
 
@@ -68,7 +61,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     private void setAdapter() {
-        mProductsListAdapter.setOnProductClickListener(mOnProductClickListener);
+        // TODO: 1/17/18 check the lambda simplification
+        mProductsListAdapter.setOnProductClickListener(this::onProductClick1);
         mRecyclerView.setAdapter(mProductsListAdapter);
     }
 
@@ -91,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public void addProductToResult(Product product) {
+        // TODO: 1/17/18 all work here related to the adapter, why don't encapsulate this with single method?
         mProductsListAdapter.appendToProducts(product);
         mProductsListAdapter.notifyItemInserted(mProductsListAdapter.getItemCount());
     }

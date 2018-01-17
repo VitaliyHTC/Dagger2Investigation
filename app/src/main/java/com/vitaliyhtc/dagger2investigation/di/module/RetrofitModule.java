@@ -16,14 +16,8 @@ import static com.vitaliyhtc.dagger2investigation.data.rest.ApiInterface.LCBO_AP
 
 @Module(includes = OkHttpClientModule.class)
 public class RetrofitModule {
-
+    // TODO: 1/17/18 move base url to gradle
     private static final String BASE_URL = LCBO_API_BASE_URL;
-
-
-    @Provides
-    public ApiInterface apiInterface(Retrofit retrofit) {
-        return retrofit.create(ApiInterface.class);
-    }
 
     @ApplicationScope
     @Provides
@@ -38,6 +32,12 @@ public class RetrofitModule {
                 .build();
     }
 
+    @Provides
+    public ApiInterface apiInterface(Retrofit retrofit) {
+        return retrofit.create(ApiInterface.class);
+    }
+
+    // // TODO: 1/17/18  do not overdo with dagger
     @Provides
     public Gson gson() {
         GsonBuilder gsonBuilder = new GsonBuilder();

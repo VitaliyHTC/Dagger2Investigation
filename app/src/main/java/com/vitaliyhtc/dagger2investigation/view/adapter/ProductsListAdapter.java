@@ -72,6 +72,7 @@ public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapte
             ButterKnife.bind(this, view);
             mContext = view.getContext();
 
+            // TODO: 1/17/18 how many times we talked about this? you already have butterknife here
             view.setOnClickListener(v -> mOnProductClickListener.onProductClick(mProducts.get(getAdapterPosition()).getId()));
         }
 
