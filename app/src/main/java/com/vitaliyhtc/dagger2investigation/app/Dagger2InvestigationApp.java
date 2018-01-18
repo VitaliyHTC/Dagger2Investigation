@@ -1,23 +1,20 @@
 package com.vitaliyhtc.dagger2investigation.app;
 
-import android.app.Activity;
-import android.app.Application;
-
 import com.vitaliyhtc.dagger2investigation.di.component.DaggerProductDataComponent;
 import com.vitaliyhtc.dagger2investigation.di.component.ProductDataComponent;
 import com.vitaliyhtc.dagger2investigation.di.module.ContextModule;
 
-public class MainApplication extends Application {
+public class Dagger2InvestigationApp extends android.app.Application {
+
+    private static Dagger2InvestigationApp sInstance;
 
     private ProductDataComponent mProductDataComponent;
-
-    public static MainApplication get(Activity activity) {
-        return (MainApplication) activity.getApplication();
-    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        sInstance = this;
 
         mProductDataComponent = DaggerProductDataComponent.builder()
                 .contextModule(new ContextModule(this))
@@ -26,5 +23,9 @@ public class MainApplication extends Application {
 
     public ProductDataComponent getProductDataComponent() {
         return mProductDataComponent;
+    }
+
+    public static Dagger2InvestigationApp getInstance() {
+        return sInstance;
     }
 }

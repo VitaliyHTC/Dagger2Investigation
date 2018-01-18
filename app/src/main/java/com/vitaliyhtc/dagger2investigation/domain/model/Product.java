@@ -1,5 +1,6 @@
 package com.vitaliyhtc.dagger2investigation.domain.model;
 
+// TODO: 1/17/18 remove unused fields, simplify your work
 public class Product {
 
     private int id;

@@ -17,15 +17,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapter.ProductsListViewHolder> {
 
-    private final Picasso picasso;
     private OnProductClickListener mOnProductClickListener;
     private List<Product> mProducts;
 
-    public ProductsListAdapter(Picasso picasso) {
-        this.picasso = picasso;
+    public ProductsListAdapter() {
         mProducts = new ArrayList<>();
     }
 
@@ -39,11 +38,14 @@ public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapte
     }
 
     public void appendToProducts(List<Product> products) {
+        int c1 = getItemCount();
         mProducts.addAll(products);
+        notifyItemRangeInserted(c1, products.size());
     }
 
     public void appendToProducts(Product product) {
         mProducts.add(product);
+        notifyItemInserted(getItemCount() - 1);
     }
 
     @Override
@@ -58,12 +60,12 @@ public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapte
         holder.bind(mProducts.get(position));
     }
 
-    public class ProductsListViewHolder extends RecyclerView.ViewHolder {
+    class ProductsListViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_title)
-        public TextView textView;
+        TextView textView;
         @BindView(R.id.image_view_product_small)
-        public ImageView imageView;
+        ImageView imageView;
 
         private Context mContext;
 
@@ -71,13 +73,16 @@ public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapte
             super(view);
             ButterKnife.bind(this, view);
             mContext = view.getContext();
+        }
 
-            view.setOnClickListener(v -> mOnProductClickListener.onProductClick(mProducts.get(getAdapterPosition()).getId()));
+        @OnClick(R.id.rl_main)
+        void onClick() {
+            mOnProductClickListener.onProductClick(mProducts.get(getAdapterPosition()).getId());
         }
 
         void bind(Product product) {
             textView.setText(product.getName());
-            picasso.with(mContext)
+            Picasso.with(mContext)
                     .load(product.getImageThumbUrl())
                     .placeholder(R.drawable.ic_list_item_bg)
                     .error(R.drawable.ic_broken_image)

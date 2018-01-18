@@ -1,25 +1,15 @@
 package com.vitaliyhtc.dagger2investigation.di.module;
 
-import com.squareup.picasso.Picasso;
-import com.vitaliyhtc.dagger2investigation.MainActivity;
-import com.vitaliyhtc.dagger2investigation.interfaces.MainActivityScope;
-import com.vitaliyhtc.dagger2investigation.view.adapter.ProductsListAdapter;
+import com.vitaliyhtc.dagger2investigation.ProductsListActivity;
 
 import dagger.Module;
-import dagger.Provides;
 
 @Module
 public class MainActivityModule {
 
-    private final MainActivity mMainActivity;
+    private final ProductsListActivity mProductsListActivity;
 
-    public MainActivityModule(MainActivity mainActivity) {
-        mMainActivity = mainActivity;
-    }
-
-    @Provides
-    @MainActivityScope
-    public ProductsListAdapter productsListAdapter(Picasso picasso) {
-        return new ProductsListAdapter(picasso);
+    public MainActivityModule(ProductsListActivity productsListActivity) {
+        mProductsListActivity = productsListActivity;
     }
 }

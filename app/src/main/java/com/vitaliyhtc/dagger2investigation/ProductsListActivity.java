@@ -7,37 +7,32 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.vitaliyhtc.dagger2investigation.app.MainApplication;
+import com.vitaliyhtc.dagger2investigation.app.Dagger2InvestigationApp;
 import com.vitaliyhtc.dagger2investigation.di.component.DaggerMainActivityComponent;
 import com.vitaliyhtc.dagger2investigation.di.component.MainActivityComponent;
 import com.vitaliyhtc.dagger2investigation.di.module.MainActivityModule;
 import com.vitaliyhtc.dagger2investigation.domain.ProductRepository;
 import com.vitaliyhtc.dagger2investigation.domain.model.Product;
-import com.vitaliyhtc.dagger2investigation.presenter.MainPresenter;
-import com.vitaliyhtc.dagger2investigation.view.MainView;
-import com.vitaliyhtc.dagger2investigation.view.adapter.OnProductClickListener;
+import com.vitaliyhtc.dagger2investigation.presenter.ProductsListPresenter;
+import com.vitaliyhtc.dagger2investigation.view.ProductsListView;
 import com.vitaliyhtc.dagger2investigation.view.adapter.ProductsListAdapter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.vitaliyhtc.dagger2investigation.Config.KEY_PRODUCT_ID;
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class ProductsListActivity extends AppCompatActivity implements ProductsListView {
 
-    private MainPresenter mMainPresenter;
+    private ProductsListPresenter mProductsListPresenter;
 
     ProductRepository mProductRepository;
 
     ProductsListAdapter mProductsListAdapter;
 
-    OnProductClickListener mOnProductClickListener =
-            new OnProductClickListener() {
-                @Override
-                public void onProductClick(int productId) {
-                    onProductClick1(productId);
-                }
-            };
+
 
     @BindView(R.id.rv_recyclerView)
     RecyclerView mRecyclerView;
@@ -53,9 +48,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
         initDi();
 
         setAdapter();
-
-        mMainPresenter = new MainPresenter(mProductRepository);
-        mMainPresenter.onAttachView(this);
+        // TODO: 1/17/18 we need to talk about this
+        // TODO: inject presenter see seetree & cofeecoin
+        // remove presenter
+        mProductsListPresenter = new ProductsListPresenter(mProductRepository);
+        mProductsListPresenter.onAttachView(this);
 
         loadData();
     }
@@ -63,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mMainPresenter.onDetachView();
+        mProductsListPresenter.onDetachView();
     }
 
     private void initViews() {
@@ -71,32 +68,33 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     private void setAdapter() {
-        mProductsListAdapter.setOnProductClickListener(mOnProductClickListener);
+        mProductsListAdapter = new ProductsListAdapter();
+        mProductsListAdapter.setOnProductClickListener(this::onProductClick);
         mRecyclerView.setAdapter(mProductsListAdapter);
     }
 
     private void initDi() {
         MainActivityComponent mainActivityComponent = DaggerMainActivityComponent.builder()
                 .mainActivityModule(new MainActivityModule(this))
-                .productDataComponent(MainApplication.get(this).getProductDataComponent())
+                .productDataComponent(Dagger2InvestigationApp.getInstance().getProductDataComponent())
                 .build();
         mProductRepository = mainActivityComponent.getProductRepository();
-        mProductsListAdapter = mainActivityComponent.getProductsListAdapter();
     }
 
-    private void onProductClick1(int productId) {
-        mMainPresenter.onProductClick(productId);
+    private void onProductClick(int productId) {
+        mProductsListPresenter.onProductClick(productId);
     }
 
     private void loadData() {
-        mMainPresenter.loadData();
+        mProductsListPresenter.loadData();
     }
 
     @Override
-    public void addProductToResult(Product product) {
-        mProductsListAdapter.appendToProducts(product);
-        mProductsListAdapter.notifyItemInserted(mProductsListAdapter.getItemCount());
+    public void addProductsToResult(List<Product> products) {
+        mProductsListAdapter.appendToProducts(products);
     }
+
+
 
     @Override
     public void loadProductsError(Throwable t) {
@@ -110,4 +108,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
         intent.putExtra(KEY_PRODUCT_ID, productId);
         startActivity(intent);
     }
+
+    //TODO: .gitignore apply, and find hove to remove changes history and unneeded file committed early.
 }

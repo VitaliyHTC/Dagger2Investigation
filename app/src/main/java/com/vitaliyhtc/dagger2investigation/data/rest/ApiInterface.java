@@ -1,5 +1,6 @@
 package com.vitaliyhtc.dagger2investigation.data.rest;
 
+import com.vitaliyhtc.dagger2investigation.BuildConfig;
 import com.vitaliyhtc.dagger2investigation.data.model.response.ProductResult;
 import com.vitaliyhtc.dagger2investigation.data.model.response.ProductsResult;
 
@@ -11,8 +12,8 @@ import retrofit2.http.Query;
 
 @SuppressWarnings("unused")
 public interface ApiInterface {
-    String LCBO_API_BASE_URL = "https://lcboapi.com/";
-    String LCBO_API_ACCESS_KEY = "MDoxZGUzZDAyYy1mYjY4LTExZTctYjMzYy05M2RlZjkzZDlkZmE6YVN2UDNaTnJndW9USWZOUHpZYWxYMGlPTEFFZ0Z1UVBMV0cw";
+    String LCBO_API_BASE_URL = BuildConfig.LCBO_API_BASE_URL;
+    String LCBO_API_ACCESS_KEY = BuildConfig.LCBO_API_ACCESS_KEY;
 
     @GET("products")
     Single<ProductsResult> getProductsResult(
