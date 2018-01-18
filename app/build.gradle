@@ -44,12 +44,15 @@ dependencies {
     compile "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttp3Version"
 
     // rxjava2
-    compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxjava2rxandroidVersion"
     compile "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava2rxjavaVersion"
+    compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxjava2rxandroidVersion"
 
     // dagger2
-    implementation "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
-    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
+    implementation "com.google.dagger:dagger:${daggerVersion}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+    implementation "com.google.dagger:dagger-android:${daggerVersion}"
+    implementation "com.google.dagger:dagger-android-support:${daggerVersion}"
+    annotationProcessor "com.google.dagger:dagger-android-processor:${daggerVersion}"
     provided "javax.annotation:jsr250-api:$rootProject.ext.jsr250apiVersion"
 
     // timber, piccaso
