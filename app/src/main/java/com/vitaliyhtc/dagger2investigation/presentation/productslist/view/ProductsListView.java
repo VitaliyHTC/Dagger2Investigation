@@ -1,7 +1,7 @@
-package com.vitaliyhtc.dagger2investigation.presentation.productslist;
+package com.vitaliyhtc.dagger2investigation.presentation.productslist.view;
 
 import com.vitaliyhtc.dagger2investigation.domain.model.Product;
-import com.vitaliyhtc.dagger2investigation.global.mvp.BaseView;
+import com.vitaliyhtc.dagger2investigation.presentation.base.mvp.BaseView;
 
 import java.util.List;
 

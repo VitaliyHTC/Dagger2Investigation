@@ -9,8 +9,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-
-//TODO: add repositories here!
 @Module
 public class DataModule {
 

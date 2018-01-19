@@ -33,8 +33,6 @@ public class Dagger2InvestigationApp extends Application implements HasActivityI
         sInstance = this;
 
         initDagger();
-
-
     }
 
 
@@ -45,8 +43,6 @@ public class Dagger2InvestigationApp extends Application implements HasActivityI
 
 
     private void initDagger() {
-        //TODO: implement
-
         mDataComponent = DaggerDataComponent.builder()
                 .application(this)
                 .build();
@@ -66,8 +62,4 @@ public class Dagger2InvestigationApp extends Application implements HasActivityI
         return mDataComponent;
     }
 
-
-    //=========================================================================================
-    // other goes below this
-    //=========================================================================================
 }

@@ -11,8 +11,6 @@ import javax.inject.Singleton;
 import dagger.BindsInstance;
 import dagger.Component;
 
-
-//TODO: apply new elements here!
 @Singleton
 @Component(
         modules = {

@@ -10,7 +10,6 @@ import com.vitaliyhtc.dagger2investigation.presentation.productslist.di.Products
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
-//TODO: add activities here!
 @Module
 public abstract class ActivityBuilder {
 

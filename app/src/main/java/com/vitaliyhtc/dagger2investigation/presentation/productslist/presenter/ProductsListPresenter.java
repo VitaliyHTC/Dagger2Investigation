@@ -1,12 +1,10 @@
 package com.vitaliyhtc.dagger2investigation.presentation.productslist.presenter;
 
-import android.util.Log;
-
 import com.vitaliyhtc.dagger2investigation.domain.ProductRepository;
 import com.vitaliyhtc.dagger2investigation.domain.RxFilter;
 import com.vitaliyhtc.dagger2investigation.domain.model.Product;
-import com.vitaliyhtc.dagger2investigation.global.mvp.BasePresenter;
-import com.vitaliyhtc.dagger2investigation.presentation.productslist.ProductsListView;
+import com.vitaliyhtc.dagger2investigation.presentation.base.mvp.BasePresenter;
+import com.vitaliyhtc.dagger2investigation.presentation.productslist.view.ProductsListView;
 
 import java.util.List;
 
@@ -17,9 +15,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class ProductsListPresenter implements BasePresenter<ProductsListView> {
-    private static final String TAG = "ProductsListPresenter";
 
     private static final int LCBO_FIRST_PAGE_INDEX = 0x01;
     private static final RxFilter<Product> PRODUCTS_FILTER = product -> true;
@@ -32,7 +30,7 @@ public class ProductsListPresenter implements BasePresenter<ProductsListView> {
 
     @Inject
     public ProductsListPresenter(ProductRepository productRepository) {
-        Log.e(TAG, "ProductsListPresenter: injected");
+        Timber.e("ProductsListPresenter: injected");
         mProductRepository = productRepository;
     }
 
@@ -52,7 +50,7 @@ public class ProductsListPresenter implements BasePresenter<ProductsListView> {
     }
 
     public void loadData() {
-        Log.e(TAG, "loadData: called!");
+        Timber.e("loadData: called!");
         loadProducts(PRODUCTS_FILTER, LCBO_FIRST_PAGE_INDEX);
     }
 
@@ -72,14 +70,14 @@ public class ProductsListPresenter implements BasePresenter<ProductsListView> {
     }
 
     private void addProductToResult(List<Product> products) {
-        mProductsListView.addProductsToResult(products);
+        if (mProductsListView != null) mProductsListView.addProductsToResult(products);
     }
 
     private void loadProductsError(Throwable t) {
-        mProductsListView.loadProductsError(t);
+        if (mProductsListView != null) mProductsListView.loadProductsError(t);
     }
 
     public void onProductClick(int productId) {
-        mProductsListView.launchProductDetailsActivity(productId);
+        if (mProductsListView != null) mProductsListView.launchProductDetailsActivity(productId);
     }
 }
