@@ -4,11 +4,11 @@ import com.vitaliyhtc.dagger2investigation.domain.model.Product;
 
 import java.util.List;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public interface ProductRepository {
 
-    Observable<List<Product>> getProductsObservable(int page);
+    Single<List<Product>> getProducts(int page);
 
-    Observable<Product> getOneProductsObservable(int productId);
+    Single<Product> getOneProduct(int productId);
 }

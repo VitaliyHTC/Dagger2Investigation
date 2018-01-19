@@ -1,4 +1,4 @@
-package com.vitaliyhtc.dagger2investigation.presentation.productslist.adapter;
+package com.vitaliyhtc.dagger2investigation.presentation.productslist.view.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

@@ -1,7 +1,6 @@
 package com.vitaliyhtc.dagger2investigation.presentation.productslist.presenter;
 
 import com.vitaliyhtc.dagger2investigation.domain.ProductRepository;
-import com.vitaliyhtc.dagger2investigation.domain.RxFilter;
 import com.vitaliyhtc.dagger2investigation.domain.model.Product;
 import com.vitaliyhtc.dagger2investigation.presentation.base.mvp.BasePresenter;
 import com.vitaliyhtc.dagger2investigation.presentation.productslist.view.ProductsListView;
@@ -10,7 +9,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -20,7 +18,6 @@ import timber.log.Timber;
 public class ProductsListPresenter implements BasePresenter<ProductsListView> {
 
     private static final int LCBO_FIRST_PAGE_INDEX = 0x01;
-    private static final RxFilter<Product> PRODUCTS_FILTER = product -> true;
 
     private ProductsListView mProductsListView;
 
@@ -28,11 +25,8 @@ public class ProductsListPresenter implements BasePresenter<ProductsListView> {
 
     private CompositeDisposable mCompositeDisposable;
 
-    // TODO: 1/19/18 why  @Inject annotation here? check the documentation about constructor injection and module provide
-    @Inject
     public ProductsListPresenter(ProductRepository productRepository) {
-        // TODO: 1/19/18 why Timber.e?
-        Timber.e("ProductsListPresenter: injected");
+        Timber.d("ProductsListPresenter: injected");
         mProductRepository = productRepository;
     }
 
@@ -52,20 +46,17 @@ public class ProductsListPresenter implements BasePresenter<ProductsListView> {
     }
 
     public void loadData() {
-        Timber.e("loadData: called!");
-        loadProducts(PRODUCTS_FILTER, LCBO_FIRST_PAGE_INDEX);
+        Timber.d("loadData: called!");
+        loadProducts(LCBO_FIRST_PAGE_INDEX);
     }
 
-    private void loadProducts(RxFilter<Product> filter, int page) {
+    private void loadProducts(int page) {
         Disposable disposable =
-                mProductRepository.getProductsObservable(page)
+                mProductRepository.getProducts(page)
                         .subscribeOn(Schedulers.io())
-                        .flatMap(Observable::fromIterable)
-                        .filter(filter::isMeetsCondition)
                         .observeOn(AndroidSchedulers.mainThread())
-                        .toList()
                         .subscribe(
-                                products -> addProductToResult(products),
+                                this::addProductToResult,
                                 this::loadProductsError
                         );
         mCompositeDisposable.add(disposable);

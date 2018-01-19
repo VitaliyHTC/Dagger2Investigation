@@ -21,9 +21,8 @@ public class ProductDetailsPresenter implements BasePresenter<ProductDetailsView
 
     private CompositeDisposable mCompositeDisposable;
 
-    @Inject
     public ProductDetailsPresenter(ProductRepository productRepository) {
-        Timber.e("ProductDetailsPresenter: injected");
+        Timber.d("ProductDetailsPresenter: injected");
         mProductRepository = productRepository;
     }
 
@@ -44,7 +43,7 @@ public class ProductDetailsPresenter implements BasePresenter<ProductDetailsView
 
     public void loadProduct(int productId) {
         Disposable disposable =
-                mProductRepository.getOneProductsObservable(productId)
+                mProductRepository.getOneProduct(productId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
