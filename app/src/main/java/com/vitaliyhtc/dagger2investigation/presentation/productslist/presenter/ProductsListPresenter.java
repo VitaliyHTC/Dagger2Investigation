@@ -28,8 +28,10 @@ public class ProductsListPresenter implements BasePresenter<ProductsListView> {
 
     private CompositeDisposable mCompositeDisposable;
 
+    // TODO: 1/19/18 why  @Inject annotation here? check the documentation about constructor injection and module provide
     @Inject
     public ProductsListPresenter(ProductRepository productRepository) {
+        // TODO: 1/19/18 why Timber.e?
         Timber.e("ProductsListPresenter: injected");
         mProductRepository = productRepository;
     }

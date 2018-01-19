@@ -25,6 +25,8 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    // TODO: 1/19/18 Observable can be replaced to Single (you`re not waiting for the stream of data, single request and single result)
+    // no need to specify getProducts[Observable], getProducts is fine
     public Observable<List<Product>> getProductsObservable(int page) {
         return mApiService
                 .getProductsResult(

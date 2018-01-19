@@ -49,11 +49,13 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // TODO: 1/19/18 why Timber.e?
         Timber.e("onCreate: called");
 
         setContentView(R.layout.activity_product_details);
         ButterKnife.bind(this);
 
+        // TODO: 1/19/18 put KEY_PRODUCT_ID in ProductDetailsActivity class, it belongs here
         targetProductId = getIntent().getIntExtra(KEY_PRODUCT_ID, NO_VALUE_INT);
 
         mProductDetailsPresenter.onAttachView(this);

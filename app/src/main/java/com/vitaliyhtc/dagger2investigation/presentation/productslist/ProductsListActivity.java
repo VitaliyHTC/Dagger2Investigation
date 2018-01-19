@@ -6,10 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.vitaliyhtc.dagger2investigation.presentation.base.BaseActivity;
-import com.vitaliyhtc.dagger2investigation.presentation.productdetails.ProductDetailsActivity;
 import com.vitaliyhtc.dagger2investigation.R;
 import com.vitaliyhtc.dagger2investigation.domain.model.Product;
+import com.vitaliyhtc.dagger2investigation.presentation.base.BaseActivity;
+import com.vitaliyhtc.dagger2investigation.presentation.productdetails.ProductDetailsActivity;
 import com.vitaliyhtc.dagger2investigation.presentation.productslist.adapter.ProductsListAdapter;
 import com.vitaliyhtc.dagger2investigation.presentation.productslist.presenter.ProductsListPresenter;
 import com.vitaliyhtc.dagger2investigation.presentation.productslist.view.ProductsListView;
@@ -24,6 +24,7 @@ import timber.log.Timber;
 
 import static com.vitaliyhtc.dagger2investigation.Config.KEY_PRODUCT_ID;
 
+// TODO: 1/19/18  ProductsListActivity is the view, should be in view package
 public class ProductsListActivity extends BaseActivity implements ProductsListView {
 
     @Inject
@@ -59,6 +60,7 @@ public class ProductsListActivity extends BaseActivity implements ProductsListVi
         mProductsListPresenter.onDetachView();
     }
 
+    // TODO: 1/19/18  initViews() work with recyclerview and setAdapter() continues recycler view configuration, can be combined
     private void initViews() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
