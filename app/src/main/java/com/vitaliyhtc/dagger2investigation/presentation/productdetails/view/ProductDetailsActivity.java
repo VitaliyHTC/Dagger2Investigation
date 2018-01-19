@@ -6,6 +6,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.squareup.picasso.Picasso;
 import com.vitaliyhtc.dagger2investigation.R;
 import com.vitaliyhtc.dagger2investigation.domain.model.Product;
@@ -13,6 +15,7 @@ import com.vitaliyhtc.dagger2investigation.presentation.base.BaseActivity;
 import com.vitaliyhtc.dagger2investigation.presentation.productdetails.presenter.ProductDetailsPresenter;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,8 +29,17 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
 
     private int targetProductId = NO_VALUE_INT;
 
+
     @Inject
+    Provider<ProductDetailsPresenter> mPresenterProvider;
+
+    @InjectPresenter
     ProductDetailsPresenter mProductDetailsPresenter;
+
+    @ProvidePresenter
+    ProductDetailsPresenter provideProductDetailsPresenter() {
+        return mPresenterProvider.get();
+    }
 
     @BindView(R.id.image_view_product_big)
     ImageView mProductBigImageView;
@@ -55,15 +67,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
 
         targetProductId = getIntent().getIntExtra(KEY_PRODUCT_ID, NO_VALUE_INT);
 
-        mProductDetailsPresenter.onAttachView(this);
-
         loadProduct(targetProductId);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mProductDetailsPresenter.onDetachView();
     }
 
     private void loadProduct(int productId) {

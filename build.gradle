@@ -52,6 +52,8 @@ ext {
     jsr250apiVersion = '1.0'
     butterknifeVersion = '8.8.1'
 
+    moxyVersion = '1.5.3'
+
     junitVersion = '4.12'
     testRunnerVersion = '1.0.1'
     espressoVersion = '3.0.1'

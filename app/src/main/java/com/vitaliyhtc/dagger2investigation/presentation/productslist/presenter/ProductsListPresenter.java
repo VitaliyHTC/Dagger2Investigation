@@ -1,13 +1,12 @@
 package com.vitaliyhtc.dagger2investigation.presentation.productslist.presenter;
 
+import com.arellomobile.mvp.InjectViewState;
+import com.arellomobile.mvp.MvpPresenter;
 import com.vitaliyhtc.dagger2investigation.domain.ProductRepository;
 import com.vitaliyhtc.dagger2investigation.domain.model.Product;
-import com.vitaliyhtc.dagger2investigation.presentation.base.mvp.BasePresenter;
 import com.vitaliyhtc.dagger2investigation.presentation.productslist.view.ProductsListView;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -15,31 +14,26 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class ProductsListPresenter implements BasePresenter<ProductsListView> {
+@InjectViewState
+public class ProductsListPresenter extends MvpPresenter<ProductsListView> {
 
     private static final int LCBO_FIRST_PAGE_INDEX = 0x01;
-
-    private ProductsListView mProductsListView;
 
     private ProductRepository mProductRepository;
 
     private CompositeDisposable mCompositeDisposable;
 
+    private boolean isDataLoaded;
+
     public ProductsListPresenter(ProductRepository productRepository) {
         Timber.d("ProductsListPresenter: injected");
         mProductRepository = productRepository;
-    }
-
-    @Override
-    public void onAttachView(ProductsListView view) {
-        mProductsListView = view;
         mCompositeDisposable = new CompositeDisposable();
     }
 
     @Override
-    public void onDetachView() {
-        mProductsListView = null;
-
+    public void onDestroy() {
+        super.onDestroy();
         if (mCompositeDisposable != null) {
             mCompositeDisposable.dispose();
         }
@@ -47,10 +41,11 @@ public class ProductsListPresenter implements BasePresenter<ProductsListView> {
 
     public void loadData() {
         Timber.d("loadData: called!");
-        loadProducts(LCBO_FIRST_PAGE_INDEX);
+        if (!isDataLoaded) loadProducts(LCBO_FIRST_PAGE_INDEX);
     }
 
     private void loadProducts(int page) {
+        isDataLoaded = true;
         Disposable disposable =
                 mProductRepository.getProducts(page)
                         .subscribeOn(Schedulers.io())
@@ -63,14 +58,14 @@ public class ProductsListPresenter implements BasePresenter<ProductsListView> {
     }
 
     private void addProductToResult(List<Product> products) {
-        if (mProductsListView != null) mProductsListView.addProductsToResult(products);
+        getViewState().addProductsToResult(products);
     }
 
     private void loadProductsError(Throwable t) {
-        if (mProductsListView != null) mProductsListView.loadProductsError(t);
+        getViewState().loadProductsError(t);
     }
 
     public void onProductClick(int productId) {
-        if (mProductsListView != null) mProductsListView.launchProductDetailsActivity(productId);
+        getViewState().launchProductDetailsActivity(productId);
     }
 }

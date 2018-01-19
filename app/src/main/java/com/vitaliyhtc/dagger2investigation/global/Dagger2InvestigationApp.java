@@ -3,6 +3,7 @@ package com.vitaliyhtc.dagger2investigation.global;
 import android.app.Activity;
 import android.app.Application;
 
+import com.vitaliyhtc.dagger2investigation.BuildConfig;
 import com.vitaliyhtc.dagger2investigation.data.di.DaggerDataComponent;
 import com.vitaliyhtc.dagger2investigation.data.di.DataComponent;
 import com.vitaliyhtc.dagger2investigation.global.di.AppComponent;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import timber.log.Timber;
 
 public class Dagger2InvestigationApp extends Application implements HasActivityInjector {
 
@@ -31,6 +33,8 @@ public class Dagger2InvestigationApp extends Application implements HasActivityI
         super.onCreate();
 
         sInstance = this;
+
+        initTimber();
 
         initDagger();
     }
@@ -62,4 +66,10 @@ public class Dagger2InvestigationApp extends Application implements HasActivityI
         return mDataComponent;
     }
 
+
+    private void initTimber() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+    }
 }

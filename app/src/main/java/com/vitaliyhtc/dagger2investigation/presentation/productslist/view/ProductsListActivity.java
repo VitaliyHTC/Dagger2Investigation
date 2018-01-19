@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.vitaliyhtc.dagger2investigation.R;
 import com.vitaliyhtc.dagger2investigation.domain.model.Product;
 import com.vitaliyhtc.dagger2investigation.presentation.base.BaseActivity;
@@ -16,6 +18,7 @@ import com.vitaliyhtc.dagger2investigation.presentation.productslist.view.adapte
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +29,15 @@ import static com.vitaliyhtc.dagger2investigation.presentation.productdetails.vi
 public class ProductsListActivity extends BaseActivity implements ProductsListView {
 
     @Inject
+    Provider<ProductsListPresenter> mPresenterProvider;
+
+    @InjectPresenter
     ProductsListPresenter mProductsListPresenter;
+
+    @ProvidePresenter
+    ProductsListPresenter provideProductsListPresenter() {
+        return mPresenterProvider.get();
+    }
 
 
     private ProductsListAdapter mProductsListAdapter;
@@ -46,15 +57,7 @@ public class ProductsListActivity extends BaseActivity implements ProductsListVi
 
         initViews();
 
-        mProductsListPresenter.onAttachView(this);
-
         loadData();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mProductsListPresenter.onDetachView();
     }
 
     private void initViews() {

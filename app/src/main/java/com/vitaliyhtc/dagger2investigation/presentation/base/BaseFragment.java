@@ -1,11 +1,12 @@
 package com.vitaliyhtc.dagger2investigation.presentation.base;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
+
+import com.arellomobile.mvp.MvpAppCompatFragment;
 
 import dagger.android.support.AndroidSupportInjection;
 
-abstract public class BaseFragment extends Fragment {
+abstract public class BaseFragment extends MvpAppCompatFragment {
 
     @Override
     public void onAttach(Context context) {

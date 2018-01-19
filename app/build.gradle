@@ -64,6 +64,11 @@ dependencies {
     compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
 
+    //moxy
+    implementation "com.arello-mobile:moxy:${moxyVersion}"
+    implementation "com.arello-mobile:moxy-app-compat:${moxyVersion}"
+    annotationProcessor "com.arello-mobile:moxy-compiler:${moxyVersion}"
+
     // room. ???
     //annotationProcessor "android.arch.persistence.room:compiler:$rootProject.ext.roomCompilerVersion"
 
