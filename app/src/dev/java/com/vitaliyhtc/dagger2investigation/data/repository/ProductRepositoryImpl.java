@@ -21,6 +21,10 @@ public class ProductRepositoryImpl implements ProductRepository {
     private final ProductMapper mProductMapper;
     private final ProductsMapper mProductsMapper;
 
+
+    private static List<Product> products = new ArrayList<>;
+
+
     public ProductRepositoryImpl(ApiInterface apiService) {
         mApiService = apiService;
         mProductMapper = new ProductMapper();

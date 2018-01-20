@@ -1,7 +1,5 @@
 package com.vitaliyhtc.dagger2investigation.data.di;
 
-import android.content.Context;
-
 import com.google.gson.GsonBuilder;
 import com.vitaliyhtc.dagger2investigation.BuildConfig;
 import com.vitaliyhtc.dagger2investigation.data.rest.ApiInterface;
