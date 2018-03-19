@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
@@ -42,55 +44,60 @@ android {
     }
 }
 
+kapt {
+    generateStubs = true
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    //TODO: apply kotlin for project
-
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
 
     // support
     implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
     implementation "com.android.support.constraint:constraint-layout:$rootProject.ext.constraintLayoutVersion"
-    compile "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
-    compile "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
 
     // retrofit2, okhttp3 & gson
-    compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit2Version"
-    compile "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofit2Version"
-    compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofit2Version"
-    compile "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
-    compile "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttp3Version"
-    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttp3Version"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit2Version"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofit2Version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofit2Version"
+    implementation "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttp3Version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttp3Version"
 
     // rxjava2
-    compile "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava2rxjavaVersion"
-    compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxjava2rxandroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava2rxjavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxjava2rxandroidVersion"
 
     // dagger2
     implementation "com.google.dagger:dagger:${daggerVersion}"
-    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+    //annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
     implementation "com.google.dagger:dagger-android:${daggerVersion}"
     implementation "com.google.dagger:dagger-android-support:${daggerVersion}"
-    annotationProcessor "com.google.dagger:dagger-android-processor:${daggerVersion}"
+    //annotationProcessor "com.google.dagger:dagger-android-processor:${daggerVersion}"
     provided "javax.annotation:jsr250-api:$rootProject.ext.jsr250apiVersion"
+
+    kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
+    kapt "com.google.dagger:dagger-android-processor:${daggerVersion}"
 
     // timber, piccaso
     implementation "com.jakewharton.timber:timber:$rootProject.ext.timberVersion"
-    compile "com.squareup.picasso:picasso:$rootProject.ext.picassoVersion"
-    compile "com.jakewharton.picasso:picasso2-okhttp3-downloader:$rootProject.ext.picasso2okhttp3DownloaderVersion"
+    implementation "com.squareup.picasso:picasso:$rootProject.ext.picassoVersion"
+    implementation "com.jakewharton.picasso:picasso2-okhttp3-downloader:$rootProject.ext.picasso2okhttp3DownloaderVersion"
 
     // butterknife
-    compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
+    implementation "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
+    kapt "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
 
     //moxy
     implementation "com.arello-mobile:moxy:${moxyVersion}"
     implementation "com.arello-mobile:moxy-app-compat:${moxyVersion}"
-    annotationProcessor "com.arello-mobile:moxy-compiler:${moxyVersion}"
+    kapt "com.arello-mobile:moxy-compiler:${moxyVersion}"
 
     // room. ???
-    //annotationProcessor "android.arch.persistence.room:compiler:$rootProject.ext.roomCompilerVersion"
+    //kapt "android.arch.persistence.room:compiler:$rootProject.ext.roomCompilerVersion"
 
     // test
     testImplementation "junit:junit:$rootProject.ext.junitVersion"

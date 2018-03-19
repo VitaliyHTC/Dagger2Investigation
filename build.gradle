@@ -43,7 +43,7 @@ ext {
     picasso2okhttp3DownloaderVersion = '1.1.0'
     timberVersion = '4.6.0'
 
-    daggerVersion = '2.13'
+    daggerVersion = '2.15'
 
     roomCompilerVersion = '1.0.0'
 
