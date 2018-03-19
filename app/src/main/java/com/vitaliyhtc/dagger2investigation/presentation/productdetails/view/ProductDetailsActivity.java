@@ -77,7 +77,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
     @Override
     public void showProduct(Product product) {
         Picasso.with(getApplicationContext())
-                .load(product.getImageUrl())
+                .load(product.getImage_url())
                 .placeholder(R.drawable.ic_list_item_bg)
                 .error(R.drawable.ic_broken_image)
                 .into(mProductBigImageView);
@@ -86,9 +86,9 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
         mProductTagsTextView.setText(product.getTags());
         String id = "" + product.getId();
         mProductIdTextView.setText(id);
-        String priceInCents = "" + product.getPriceInCents();
+        String priceInCents = "" + product.getPrice_in_cents();
         mProductPriceTextView.setText(priceInCents);
-        String regularPriceInCents = "" + product.getRegularPriceInCents();
+        String regularPriceInCents = "" + product.getRegular_price_in_cents();
         mProductRegularPriceTextView.setText(regularPriceInCents);
     }
 

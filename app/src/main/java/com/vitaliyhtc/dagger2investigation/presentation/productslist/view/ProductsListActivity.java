@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -27,6 +28,7 @@ import timber.log.Timber;
 import static com.vitaliyhtc.dagger2investigation.presentation.productdetails.view.ProductDetailsActivity.KEY_PRODUCT_ID;
 
 public class ProductsListActivity extends BaseActivity implements ProductsListView {
+    private static final String TAG = "ProductsListActivity";
 
     @Inject
     Provider<ProductsListPresenter> mPresenterProvider;
@@ -82,6 +84,7 @@ public class ProductsListActivity extends BaseActivity implements ProductsListVi
 
     @Override
     public void loadProductsError(Throwable t) {
+        Log.e(TAG, "Error", t);
         Toast.makeText(this, "ERROR: " + t.getMessage(), Toast.LENGTH_LONG).show();
     }
 

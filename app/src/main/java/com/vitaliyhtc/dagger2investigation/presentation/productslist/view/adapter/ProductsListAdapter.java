@@ -83,7 +83,7 @@ public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapte
         void bind(Product product) {
             textView.setText(product.getName());
             Picasso.with(mContext)
-                    .load(product.getImageThumbUrl())
+                    .load(product.getImage_thumb_url())
                     .placeholder(R.drawable.ic_list_item_bg)
                     .error(R.drawable.ic_broken_image)
                     .into(imageView);

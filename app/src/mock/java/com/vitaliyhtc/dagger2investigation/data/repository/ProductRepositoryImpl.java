@@ -1,11 +1,8 @@
 package com.vitaliyhtc.dagger2investigation.data.repository;
 
 import com.google.gson.Gson;
-import com.vitaliyhtc.dagger2investigation.data.model.mapper.ProductsMapper;
-import com.vitaliyhtc.dagger2investigation.data.model.response.ProductsResult;
 import com.vitaliyhtc.dagger2investigation.data.rest.ApiInterface;
 import com.vitaliyhtc.dagger2investigation.domain.ProductRepository;
-import com.vitaliyhtc.dagger2investigation.domain.model.Product;
 import com.vitaliyhtc.dagger2investigation.global.Dagger2InvestigationApp;
 import com.vitaliyhtc.dagger2investigation.utils.AssetsUtils;
 
