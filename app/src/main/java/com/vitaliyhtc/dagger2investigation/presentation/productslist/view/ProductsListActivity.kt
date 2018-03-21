@@ -12,6 +12,7 @@ import com.vitaliyhtc.dagger2investigation.domain.model.Product
 import com.vitaliyhtc.dagger2investigation.presentation.base.BaseActivity
 import com.vitaliyhtc.dagger2investigation.presentation.productdetails.view.ProductDetailsActivity
 import com.vitaliyhtc.dagger2investigation.presentation.productslist.presenter.ProductsListPresenter
+import com.vitaliyhtc.dagger2investigation.presentation.productslist.view.adapter.OnProductClickListener
 import com.vitaliyhtc.dagger2investigation.presentation.productslist.view.adapter.ProductsListAdapter
 import kotlinx.android.synthetic.main.activity_products_list.*
 import timber.log.Timber
@@ -48,12 +49,12 @@ class ProductsListActivity : BaseActivity(), ProductsListView {
     private fun initViews() {
         rv_recyclerView.layoutManager = LinearLayoutManager(this)
         mProductsListAdapter = ProductsListAdapter()
-        mProductsListAdapter.setOnProductClickListener({ productId: Int -> onProductClick(productId) })
+        mProductsListAdapter.setOnProductClickListener(object : OnProductClickListener {
+            override fun onProductClick(productId: Int) {
+                mProductsListPresenter.onProductClick(productId)
+            }
+        })
         rv_recyclerView.adapter = mProductsListAdapter
-    }
-
-    private fun onProductClick(productId: Int) {
-        mProductsListPresenter.onProductClick(productId)
     }
 
     private fun loadData() {
