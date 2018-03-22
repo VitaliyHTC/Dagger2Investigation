@@ -3,6 +3,7 @@ package com.vitaliyhtc.dagger2investigation.presentation.productslist.view
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.vitaliyhtc.dagger2investigation.Config.KEY_PRODUCT_ID
@@ -73,5 +74,13 @@ class ProductsListActivity : BaseActivity(), ProductsListView {
         val intent = Intent(this, ProductDetailsActivity::class.java)
         intent.putExtra(KEY_PRODUCT_ID, productId)
         startActivity(intent)
+    }
+
+    override fun showLoadingInProgress() {
+        pb_progressbar.visibility = View.VISIBLE
+    }
+
+    override fun hideLoadingInProgress() {
+        pb_progressbar.visibility = View.GONE
     }
 }

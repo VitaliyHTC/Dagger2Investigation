@@ -23,14 +23,14 @@ class ProductsListPresenter(val productRepository: ProductRepository) : MvpPrese
         mCompositeDisposable.dispose()
     }
 
-    public fun loadData() {
+    fun loadData() {
         Timber.d("loadData: called")
         if (!isDataLoaded) loadProducts(LCBO_FIRST_PAGE_INDEX)
     }
 
     private fun loadProducts(page: Int) {
         isDataLoaded = true
-        // TODO: 3/22/18 need to add loading state showLoader when we start, stopLoader when loading finished
+        viewState.showLoadingInProgress()
         productRepository.getProducts(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -42,15 +42,17 @@ class ProductsListPresenter(val productRepository: ProductRepository) : MvpPrese
     }
 
     private fun addProductsToResult(products: List<Product>) {
+        viewState.hideLoadingInProgress()
         viewState.addProductsToResult(products)
     }
 
     private fun loadProductsError(throwable: Throwable) {
         Timber.e(RuntimeException(throwable))
+        viewState.hideLoadingInProgress()
         viewState.loadProductsError(throwable)
     }
 
-    public fun onProductClick(productId: Int) {
+    fun onProductClick(productId: Int) {
         viewState.launchProductDetailsActivity(productId)
     }
 }
