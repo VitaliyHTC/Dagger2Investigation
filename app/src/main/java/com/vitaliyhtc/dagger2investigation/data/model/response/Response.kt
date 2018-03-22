@@ -1,5 +1,6 @@
 package com.vitaliyhtc.dagger2investigation.data.model.response
 
+// TODO: 3/22/18 do you need this pager?
 data class Pager(var records_per_page: Int,
                  var total_record_count: Int,
                  var current_page_record_count: Int,

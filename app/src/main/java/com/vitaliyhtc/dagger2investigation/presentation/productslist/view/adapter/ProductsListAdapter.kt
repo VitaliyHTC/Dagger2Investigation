@@ -24,6 +24,7 @@ class ProductsListAdapter : RecyclerView.Adapter<ProductsListAdapter.ProductsLis
     }
 
     fun appendToProducts(products: List<Product>) {
+        // TODO: 3/22/18 rename c1 
         val c1 = itemCount
         mProducts.addAll(products)
         notifyItemRangeInserted(c1, products.size)
@@ -35,6 +36,7 @@ class ProductsListAdapter : RecyclerView.Adapter<ProductsListAdapter.ProductsLis
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ProductsListViewHolder {
+        // TODO: 3/22/18 add context extension for layout inflater
         val v: View = LayoutInflater.from(parent?.context)
                 .inflate(R.layout.list_item_product, parent, false)
         return ProductsListViewHolder(v)
@@ -42,7 +44,8 @@ class ProductsListAdapter : RecyclerView.Adapter<ProductsListAdapter.ProductsLis
 
     override fun onBindViewHolder(holder: ProductsListViewHolder, position: Int) {
         holder.bind(mProducts[position])
-        holder.itemView.setOnClickListener { _ -> mOnProductClickListener?.onProductClick(mProducts[position].id) }
+        // TODO: 3/22/18 now new onclick listener is assigned for each bind
+        holder.itemView.setOnClickListener {  mOnProductClickListener?.onProductClick(mProducts[position].id) }
     }
 
     class ProductsListViewHolder(view: View) : RecyclerView.ViewHolder(view) {

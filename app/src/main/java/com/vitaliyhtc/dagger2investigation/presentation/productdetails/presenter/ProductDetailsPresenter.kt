@@ -31,7 +31,10 @@ class ProductDetailsPresenter(val productRepository: ProductRepository) : MvpPre
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { d: Disposable -> mCompositeDisposable.add(d) }
-                .subscribe(this::onProductLoaded, this::loadProductsError)
+                .subscribe(
+                        this::onProductLoaded,
+                        this::loadProductsError
+                )
     }
 
     private fun onProductLoaded(product: Product) {

@@ -1,9 +1,6 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -32,6 +29,8 @@ android {
     }
     flavorDimensions "dev"
     productFlavors {
+//        todo dev is your main version, don't need prefix here
+        // this prefix can be applied to app name from flavor
         dev {
             versionName defaultConfig.versionName + "-dev"
             dimension "dev"
@@ -79,6 +78,7 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
     kapt "com.google.dagger:dagger-android-processor:${daggerVersion}"
 
+//    todo if 'rootProject.ext.' is not required, why do you write them?
     // timber, piccaso
     implementation "com.jakewharton.timber:timber:$rootProject.ext.timberVersion"
     implementation "com.squareup.picasso:picasso:$rootProject.ext.picassoVersion"
