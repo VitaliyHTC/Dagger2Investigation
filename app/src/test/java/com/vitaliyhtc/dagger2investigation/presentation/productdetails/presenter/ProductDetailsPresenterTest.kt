@@ -2,6 +2,7 @@ package com.vitaliyhtc.dagger2investigation.presentation.productdetails.presente
 
 import com.vitaliyhtc.dagger2investigation.domain.ProductRepository
 import com.vitaliyhtc.dagger2investigation.domain.model.Product
+import com.vitaliyhtc.dagger2investigation.presentation.productdetails.view.`ProductDetailsView$$State`
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins
@@ -27,8 +28,6 @@ class ProductDetailsPresenterTest {
     fun setup() {
         MockitoAnnotations.initMocks(this)
 
-        // TODO: 3/22/18 you can skip params if you don't need them,
-        // '_' is used if you have many paramaters and you don't care about one of them
         RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
 

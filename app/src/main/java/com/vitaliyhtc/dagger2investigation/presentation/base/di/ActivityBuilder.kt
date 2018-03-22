@@ -12,12 +12,11 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuilder {
 
-    // TODO: 3/22/18 why you need brackets here?
-    @ContributesAndroidInjector(modules = [(ProductsListModule::class)])
+    @ContributesAndroidInjector(modules = [ProductsListModule::class])
     @ProductsListActivityScope
     internal abstract fun bindProductsListActivity(): ProductsListActivity
 
-    @ContributesAndroidInjector(modules = [(ProductDetailsModule::class)])
+    @ContributesAndroidInjector(modules = [ProductDetailsModule::class])
     @ProductDetailsActivityScope
     internal abstract fun bindProductDetailsActivity(): ProductDetailsActivity
 }
