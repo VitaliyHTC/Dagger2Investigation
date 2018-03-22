@@ -1,9 +1,6 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -79,6 +76,7 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
     kapt "com.google.dagger:dagger-android-processor:${daggerVersion}"
 
+//    todo if 'rootProject.ext.' is not required, why do you write them?
     // timber, piccaso
     implementation "com.jakewharton.timber:timber:$rootProject.ext.timberVersion"
     implementation "com.squareup.picasso:picasso:$rootProject.ext.picassoVersion"

@@ -2,17 +2,16 @@ package com.vitaliyhtc.dagger2investigation.presentation.productslist.presenter
 
 import com.vitaliyhtc.dagger2investigation.domain.ProductRepository
 import com.vitaliyhtc.dagger2investigation.domain.model.Product
-import com.vitaliyhtc.dagger2investigation.presentation.productslist.view.`ProductsListView$$State`
 import io.reactivex.Single
+import io.reactivex.android.plugins.RxAndroidPlugins
+import io.reactivex.plugins.RxJavaPlugins
+import io.reactivex.schedulers.Schedulers
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.mockito.MockitoAnnotations
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.android.plugins.RxAndroidPlugins
-import io.reactivex.plugins.RxJavaPlugins
 import org.mockito.Mock
 import org.mockito.Mockito.*
+import org.mockito.MockitoAnnotations
 
 
 class ProductsListPresenterTest {
@@ -28,7 +27,7 @@ class ProductsListPresenterTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-
+        // TODO: 3/22/18 you can skip params if you don't need them,
         RxJavaPlugins.setIoSchedulerHandler { _ -> Schedulers.trampoline() }
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { _ -> Schedulers.trampoline() }
 

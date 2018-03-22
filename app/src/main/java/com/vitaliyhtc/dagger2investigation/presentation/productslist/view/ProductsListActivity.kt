@@ -66,6 +66,7 @@ class ProductsListActivity : BaseActivity(), ProductsListView {
     }
 
     override fun loadProductsError(t: Throwable) {
+        // TODO: 3/22/18 create toast extension for context
         Toast.makeText(this, "ERROR: ${t.message}", Toast.LENGTH_LONG).show()
     }
 

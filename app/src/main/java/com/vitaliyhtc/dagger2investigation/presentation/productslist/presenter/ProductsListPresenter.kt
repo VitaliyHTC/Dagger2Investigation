@@ -30,11 +30,15 @@ class ProductsListPresenter(val productRepository: ProductRepository) : MvpPrese
 
     private fun loadProducts(page: Int) {
         isDataLoaded = true
+        // TODO: 3/22/18 need to add loading state showLoader when we start, stopLoader when loading finished
         productRepository.getProducts(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { d: Disposable -> mCompositeDisposable.add(d) }
-                .subscribe(this::addProductsToResult, this::loadProductsError)
+                .subscribe(
+                        this::addProductsToResult,
+                        this::loadProductsError
+                )
     }
 
     private fun addProductsToResult(products: List<Product>) {

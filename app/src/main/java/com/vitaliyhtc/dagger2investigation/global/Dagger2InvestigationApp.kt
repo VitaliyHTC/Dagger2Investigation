@@ -3,10 +3,8 @@ package com.vitaliyhtc.dagger2investigation.global
 import android.app.Activity
 import android.app.Application
 import com.vitaliyhtc.dagger2investigation.BuildConfig
-import com.vitaliyhtc.dagger2investigation.data.di.DaggerDataComponent
 import com.vitaliyhtc.dagger2investigation.data.di.DataComponent
 import com.vitaliyhtc.dagger2investigation.global.di.AppComponent
-import com.vitaliyhtc.dagger2investigation.global.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -14,9 +12,10 @@ import timber.log.Timber
 import javax.inject.Inject
 
 //TODO: check where to place static fields and functions.
-
+// can be inside as companion object
 private lateinit var sInstance: Dagger2InvestigationApp
 
+// TODO: 3/22/18 rename it to App
 class Dagger2InvestigationApp : Application(), HasActivityInjector {
 
     @Inject
@@ -38,7 +37,7 @@ class Dagger2InvestigationApp : Application(), HasActivityInjector {
     private fun initDagger() {
         mDataComponent = DaggerDataComponent.builder()
                 .application(this)
-                .build();
+                .build()
 
         mAppComponent = DaggerAppComponent.builder()
                 .dataComponent(mDataComponent)
@@ -56,4 +55,5 @@ class Dagger2InvestigationApp : Application(), HasActivityInjector {
     }
 }
 
+// TODO: 3/22/18 check this also
 fun getInstance(): Dagger2InvestigationApp = sInstance
