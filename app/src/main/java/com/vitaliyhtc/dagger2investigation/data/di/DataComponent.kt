@@ -2,7 +2,7 @@ package com.vitaliyhtc.dagger2investigation.data.di
 
 import android.content.Context
 import com.vitaliyhtc.dagger2investigation.domain.ProductRepository
-import com.vitaliyhtc.dagger2investigation.global.Dagger2InvestigationApp
+import com.vitaliyhtc.dagger2investigation.global.App
 import com.vitaliyhtc.dagger2investigation.global.di.AppModule
 import dagger.BindsInstance
 import dagger.Component
@@ -23,7 +23,7 @@ interface DataComponent {
     interface Builder {
 
         @BindsInstance
-        fun application(application: Dagger2InvestigationApp): Builder
+        fun application(application: App): Builder
 
         fun build(): DataComponent
     }

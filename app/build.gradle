@@ -29,10 +29,8 @@ android {
     }
     flavorDimensions "dev"
     productFlavors {
-//        todo dev is your main version, don't need prefix here
         // this prefix can be applied to app name from flavor
         dev {
-            versionName defaultConfig.versionName + "-dev"
             dimension "dev"
         }
         mock {
@@ -53,55 +51,54 @@ dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
 
     // support
-    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
-    implementation "com.android.support.constraint:constraint-layout:$rootProject.ext.constraintLayoutVersion"
-    implementation "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
-    implementation "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
+    implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$supportLibraryVersion"
 
     // retrofit2, okhttp3 & gson
-    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit2Version"
-    implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofit2Version"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofit2Version"
-    implementation "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
-    implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttp3Version"
-    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttp3Version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2Version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2Version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2Version"
+    implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp3Version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3Version"
 
     // rxjava2
-    implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava2rxjavaVersion"
-    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxjava2rxandroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava2rxjavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxjava2rxandroidVersion"
 
     // dagger2
-    implementation "com.google.dagger:dagger:${daggerVersion}"
-    implementation "com.google.dagger:dagger-android:${daggerVersion}"
-    implementation "com.google.dagger:dagger-android-support:${daggerVersion}"
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
 
-    kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
-    kapt "com.google.dagger:dagger-android-processor:${daggerVersion}"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
-//    todo if 'rootProject.ext.' is not required, why do you write them?
     // timber, piccaso
-    implementation "com.jakewharton.timber:timber:$rootProject.ext.timberVersion"
-    implementation "com.squareup.picasso:picasso:$rootProject.ext.picassoVersion"
-    implementation "com.jakewharton.picasso:picasso2-okhttp3-downloader:$rootProject.ext.picasso2okhttp3DownloaderVersion"
+    implementation "com.jakewharton.timber:timber:$timberVersion"
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
+    implementation "com.jakewharton.picasso:picasso2-okhttp3-downloader:$picasso2okhttp3DownloaderVersion"
 
     // butterknife
-    implementation "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
-    kapt "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
+    implementation "com.jakewharton:butterknife:$butterknifeVersion"
+    kapt "com.jakewharton:butterknife-compiler:$butterknifeVersion"
 
     //moxy
-    implementation "com.arello-mobile:moxy:${moxyVersion}"
-    implementation "com.arello-mobile:moxy-app-compat:${moxyVersion}"
-    kapt "com.arello-mobile:moxy-compiler:${moxyVersion}"
+    implementation "com.arello-mobile:moxy:$moxyVersion"
+    implementation "com.arello-mobile:moxy-app-compat:$moxyVersion"
+    kapt "com.arello-mobile:moxy-compiler:$moxyVersion"
 
     // room. ???
-    //kapt "android.arch.persistence.room:compiler:$rootProject.ext.roomCompilerVersion"
+    //kapt "android.arch.persistence.room:compiler:$roomCompilerVersion"
 
     // test
-    testImplementation "junit:junit:$rootProject.ext.junitVersion"
-    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
-    testImplementation "org.mockito:mockito-inline:${mockitoVersion}"
-    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.testRunnerVersion"
-    androidTestImplementation("com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion", {
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+    androidTestImplementation "com.android.support.test:runner:$testRunnerVersion"
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:$espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }

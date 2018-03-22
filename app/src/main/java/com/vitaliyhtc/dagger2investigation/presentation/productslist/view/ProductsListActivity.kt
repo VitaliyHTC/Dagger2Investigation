@@ -3,7 +3,6 @@ package com.vitaliyhtc.dagger2investigation.presentation.productslist.view
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.vitaliyhtc.dagger2investigation.Config.KEY_PRODUCT_ID
@@ -14,6 +13,7 @@ import com.vitaliyhtc.dagger2investigation.presentation.productdetails.view.Prod
 import com.vitaliyhtc.dagger2investigation.presentation.productslist.presenter.ProductsListPresenter
 import com.vitaliyhtc.dagger2investigation.presentation.productslist.view.adapter.OnProductClickListener
 import com.vitaliyhtc.dagger2investigation.presentation.productslist.view.adapter.ProductsListAdapter
+import com.vitaliyhtc.dagger2investigation.utils.toastLong
 import kotlinx.android.synthetic.main.activity_products_list.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -66,8 +66,7 @@ class ProductsListActivity : BaseActivity(), ProductsListView {
     }
 
     override fun loadProductsError(t: Throwable) {
-        // TODO: 3/22/18 create toast extension for context
-        Toast.makeText(this, "ERROR: ${t.message}", Toast.LENGTH_LONG).show()
+        toastLong("ERROR: ${t.message}")
     }
 
     override fun launchProductDetailsActivity(productId: Int) {
