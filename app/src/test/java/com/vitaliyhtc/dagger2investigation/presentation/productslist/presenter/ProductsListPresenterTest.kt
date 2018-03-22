@@ -47,7 +47,10 @@ class ProductsListPresenterTest {
         `when`(mProductsRepository.getProducts(pageNumber)).thenReturn(Single.just(products))
 
         mPresenter.loadData()
+        verify(mViewState).showLoadingInProgress()
+        verify(mViewState).hideLoadingInProgress()
         verify(mViewState).addProductsToResult(products)
+        verifyNoMoreInteractions(mViewState)
     }
 
     @Test
@@ -59,7 +62,10 @@ class ProductsListPresenterTest {
         `when`(mProductsRepository.getProducts(pageNumber)).thenReturn(Single.error(ex))
 
         mPresenter.loadData()
+        verify(mViewState).showLoadingInProgress()
+        verify(mViewState).hideLoadingInProgress()
         verify(mViewState).loadProductsError(ex)
+        verifyNoMoreInteractions(mViewState)
     }
 
     @Test
@@ -68,6 +74,7 @@ class ProductsListPresenterTest {
 
         mPresenter.onProductClick(productId)
         verify(mViewState).launchProductDetailsActivity(productId)
+        verifyNoMoreInteractions(mViewState)
     }
 
     @After

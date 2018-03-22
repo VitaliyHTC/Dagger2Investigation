@@ -45,6 +45,7 @@ class ProductDetailsPresenterTest {
 
         mPresenter.loadProduct(productId)
         verify(mViewState).showProduct(product)
+        verifyNoMoreInteractions(mViewState)
     }
 
     @Test
@@ -56,6 +57,7 @@ class ProductDetailsPresenterTest {
 
         mPresenter.loadProduct(productId)
         verify(mViewState).loadProductsError(ex)
+        verifyNoMoreInteractions(mViewState)
     }
 
     @After
