@@ -1,5 +1,6 @@
 package com.vitaliyhtc.dagger2investigation.data.model.response
 
+// TODO: 3/23/18 shouldn't be val?
 data class Product(var id: Int,
                    var name: String,
                    var tags: String,

@@ -7,7 +7,6 @@ import com.vitaliyhtc.dagger2investigation.domain.model.Product
 import com.vitaliyhtc.dagger2investigation.presentation.productdetails.view.ProductDetailsView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
@@ -30,7 +29,9 @@ class ProductDetailsPresenter(val productRepository: ProductRepository) : MvpPre
         productRepository.getOneProduct(productId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { d: Disposable -> mCompositeDisposable.add(d) }
+//                .doOnSubscribe { d: Disposable -> mCompositeDisposable.add(d) }
+                // for rxKotlin it can be even as { mCompositeDisposable += it }
+                .doOnSubscribe { mCompositeDisposable.add(it) }
                 .subscribe(
                         this::onProductLoaded,
                         this::loadProductsError

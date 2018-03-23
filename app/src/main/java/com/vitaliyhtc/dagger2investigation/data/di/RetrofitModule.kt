@@ -15,7 +15,6 @@ import javax.inject.Singleton
 
 @Module
 class RetrofitModule {
-    private val baseUrl = BuildConfig.LCBO_API_BASE_URL
 
     @Provides
     @Singleton
@@ -24,7 +23,7 @@ class RetrofitModule {
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
                 .client(getOkHttpClient())
-                .baseUrl(baseUrl)
+                .baseUrl(BuildConfig.LCBO_API_BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                 .build()

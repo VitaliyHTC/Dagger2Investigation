@@ -18,6 +18,7 @@ class ProductsListPresenter(val productRepository: ProductRepository) : MvpPrese
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
     private var isDataLoaded: Boolean = false
 
+    // TODO: 3/23/18 why onDestroy is the first method?
     override fun onDestroy() {
         super.onDestroy()
         mCompositeDisposable.dispose()
@@ -29,6 +30,7 @@ class ProductsListPresenter(val productRepository: ProductRepository) : MvpPrese
     }
 
     private fun loadProducts(page: Int) {
+        // TODO: 3/23/18 its to early to say that data is loaded, don't you think?
         isDataLoaded = true
         viewState.showLoadingInProgress()
         productRepository.getProducts(page)

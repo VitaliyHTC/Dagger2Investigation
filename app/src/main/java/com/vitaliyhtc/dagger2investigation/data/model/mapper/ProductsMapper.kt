@@ -1,14 +1,15 @@
 package com.vitaliyhtc.dagger2investigation.data.model.mapper
 
-import com.vitaliyhtc.dagger2investigation.data.model.response.Product as Product1
 import com.vitaliyhtc.dagger2investigation.domain.model.Product
 import io.reactivex.functions.Function
+import com.vitaliyhtc.dagger2investigation.data.model.response.Product as ProductApi
 
-class ProductsMapper : Function<List<Product1>, ArrayList<Product>> {
+// TODO: 3/23/18 why here was ArrayList?
+class ProductsMapper : Function<List<ProductApi>, List<Product>> {
 
-    private val mPm: ProductMapper = ProductMapper()
+    private val mapper = ProductMapper()
 
-    override fun apply(products: List<Product1>): ArrayList<Product> {
-        return ArrayList(products.map { product -> mPm.apply(product) })
+    override fun apply(products: List<ProductApi>): List<Product> {
+        return products.map { mapper.apply(it) }
     }
 }

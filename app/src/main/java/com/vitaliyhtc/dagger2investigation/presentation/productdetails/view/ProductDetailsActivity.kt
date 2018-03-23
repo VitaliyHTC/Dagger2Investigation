@@ -1,7 +1,6 @@
 package com.vitaliyhtc.dagger2investigation.presentation.productdetails.view
 
 import android.os.Bundle
-import android.widget.Toast
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.squareup.picasso.Picasso
@@ -11,6 +10,7 @@ import com.vitaliyhtc.dagger2investigation.R
 import com.vitaliyhtc.dagger2investigation.domain.model.Product
 import com.vitaliyhtc.dagger2investigation.presentation.base.BaseActivity
 import com.vitaliyhtc.dagger2investigation.presentation.productdetails.presenter.ProductDetailsPresenter
+import com.vitaliyhtc.dagger2investigation.utils.toastShort
 import kotlinx.android.synthetic.main.activity_product_details.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -18,6 +18,7 @@ import javax.inject.Provider
 
 class ProductDetailsActivity : BaseActivity(), ProductDetailsView {
 
+    // TODO: 3/23/18 check val/var everywhere
     private var targetProductId = NO_VALUE_INT
 
     @Inject
@@ -27,9 +28,7 @@ class ProductDetailsActivity : BaseActivity(), ProductDetailsView {
     internal lateinit var mProductDetailsPresenter: ProductDetailsPresenter
 
     @ProvidePresenter
-    internal fun provideProductDetailsPresenter(): ProductDetailsPresenter {
-        return mPresenterProvider.get()
-    }
+    internal fun provideProductDetailsPresenter() = mPresenterProvider.get() // much easier =)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +60,6 @@ class ProductDetailsActivity : BaseActivity(), ProductDetailsView {
     }
 
     override fun loadProductsError(t: Throwable) {
-        Toast.makeText(this, "ERROR: ${t.message}", Toast.LENGTH_LONG).show()
+        toastShort("ERROR: ${t.message}")
     }
 }

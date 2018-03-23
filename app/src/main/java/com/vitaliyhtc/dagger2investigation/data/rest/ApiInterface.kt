@@ -18,6 +18,7 @@ interface ApiInterface {
             @Query("access_key") accessKey: String
     ): Single<ProductsResult>
 
+    // TODO: 3/23/18 clean up
     @GET("products")
     fun getProductsSearchWithWResult(
             @Query("page") page: Int,
