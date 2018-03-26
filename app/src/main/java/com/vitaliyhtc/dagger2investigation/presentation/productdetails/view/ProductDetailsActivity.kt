@@ -1,10 +1,11 @@
 package com.vitaliyhtc.dagger2investigation.presentation.productdetails.view
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.squareup.picasso.Picasso
-import com.vitaliyhtc.dagger2investigation.Config.KEY_PRODUCT_ID
 import com.vitaliyhtc.dagger2investigation.Config.NO_VALUE_INT
 import com.vitaliyhtc.dagger2investigation.R
 import com.vitaliyhtc.dagger2investigation.domain.model.Product
@@ -16,9 +17,19 @@ import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
+
 class ProductDetailsActivity : BaseActivity(), ProductDetailsView {
 
-    // TODO: 3/23/18 check val/var everywhere
+    companion object {
+        private const val KEY_PRODUCT_ID = "KEY_PRODUCT_ID"
+
+        fun newInstance(context: Context, productId: Int) {
+            val intent = Intent(context, ProductDetailsActivity::class.java)
+            intent.putExtra(KEY_PRODUCT_ID, productId)
+            context.startActivity(intent)
+        }
+    }
+
     private var targetProductId = NO_VALUE_INT
 
     @Inject

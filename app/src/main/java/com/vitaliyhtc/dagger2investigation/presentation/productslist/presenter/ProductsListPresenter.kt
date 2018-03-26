@@ -17,21 +17,16 @@ class ProductsListPresenter(val productRepository: ProductRepository) : MvpPrese
     private val LCBO_FIRST_PAGE_INDEX = 0x01
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
     private var isDataLoaded: Boolean = false
-
-    // TODO: 3/23/18 why onDestroy is the first method?
-    override fun onDestroy() {
-        super.onDestroy()
-        mCompositeDisposable.dispose()
-    }
+    private var isInLoadingProgress: Boolean = false
 
     fun loadData() {
         Timber.d("loadData: called")
-        if (!isDataLoaded) loadProducts(LCBO_FIRST_PAGE_INDEX)
+        if (!isDataLoaded && !isInLoadingProgress) loadProducts(LCBO_FIRST_PAGE_INDEX)
     }
 
     private fun loadProducts(page: Int) {
-        // TODO: 3/23/18 its to early to say that data is loaded, don't you think?
-        isDataLoaded = true
+        isInLoadingProgress = true
+
         viewState.showLoadingInProgress()
         productRepository.getProducts(page)
                 .subscribeOn(Schedulers.io())
@@ -44,11 +39,16 @@ class ProductsListPresenter(val productRepository: ProductRepository) : MvpPrese
     }
 
     private fun addProductsToResult(products: List<Product>) {
+        isInLoadingProgress = false
+        isDataLoaded = true
+
         viewState.hideLoadingInProgress()
         viewState.addProductsToResult(products)
     }
 
     private fun loadProductsError(throwable: Throwable) {
+        isInLoadingProgress = false
+
         Timber.e(RuntimeException(throwable))
         viewState.hideLoadingInProgress()
         viewState.loadProductsError(throwable)
@@ -56,5 +56,10 @@ class ProductsListPresenter(val productRepository: ProductRepository) : MvpPrese
 
     fun onProductClick(productId: Int) {
         viewState.launchProductDetailsActivity(productId)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mCompositeDisposable.dispose()
     }
 }

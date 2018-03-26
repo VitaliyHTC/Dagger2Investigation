@@ -1,21 +1,24 @@
 package com.vitaliyhtc.dagger2investigation.presentation.productslist.view.adapter
 
 import android.content.Context
+import android.support.annotation.LayoutRes
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.squareup.picasso.Picasso
 import com.vitaliyhtc.dagger2investigation.R
 import com.vitaliyhtc.dagger2investigation.domain.model.Product
-import com.vitaliyhtc.dagger2investigation.utils.inflateLayout
+import com.vitaliyhtc.dagger2investigation.utils.layoutInflater
 import kotlinx.android.synthetic.main.list_item_product.view.*
 
 class ProductsListAdapter : RecyclerView.Adapter<ProductsListAdapter.ProductsListViewHolder>() {
 
     private val mProducts: ArrayList<Product> = ArrayList()
-    private var mOnProductClickListener: OnProductClickListener? = null
+    //private var mOnProductClickListener: OnProductClickListener? = null
 
-    fun setOnProductClickListener(onProductClickListener: OnProductClickListener) {
+    private var mOnProductClickListener: ((id: Int) -> Unit) = {}
+
+    fun setOnProductClickListener(onProductClickListener: (id: Int) -> Unit) {
         mOnProductClickListener = onProductClickListener
     }
 
@@ -39,6 +42,10 @@ class ProductsListAdapter : RecyclerView.Adapter<ProductsListAdapter.ProductsLis
         return ProductsListViewHolder(v)
     }
 
+    private fun inflateLayout(parent: ViewGroup, @LayoutRes layoutId: Int): View {
+        return parent.context.layoutInflater().inflate(layoutId, parent, false)
+    }
+
     override fun onBindViewHolder(holder: ProductsListViewHolder, position: Int) {
         holder.bind(mProducts[position])
     }
@@ -50,7 +57,7 @@ class ProductsListAdapter : RecyclerView.Adapter<ProductsListAdapter.ProductsLis
         private val image = view.image_view_product_small
 
         init {
-            view.setOnClickListener { mOnProductClickListener?.onProductClick(mProducts[adapterPosition].id) }
+            view.setOnClickListener { mOnProductClickListener(mProducts[adapterPosition].id) }
         }
 
         fun bind(product: Product) {

@@ -4,7 +4,6 @@ import com.vitaliyhtc.dagger2investigation.domain.model.Product
 import io.reactivex.functions.Function
 import com.vitaliyhtc.dagger2investigation.data.model.response.Product as ProductApi
 
-// TODO: 3/23/18 why here was ArrayList?
 class ProductsMapper : Function<List<ProductApi>, List<Product>> {
 
     private val mapper = ProductMapper()
