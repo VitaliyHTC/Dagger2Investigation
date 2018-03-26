@@ -45,7 +45,7 @@ ext {
 
     daggerVersion = '2.15'
 
-    roomCompilerVersion = '1.0.0'
+    roomVersion = '1.0.0'
 
     rxjava2rxandroidVersion = '2.0.1'
     rxjava2rxjavaVersion = '2.1.8'

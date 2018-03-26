@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 @InjectViewState
-class ProductDetailsPresenter(val productRepository: ProductRepository) : MvpPresenter<ProductDetailsView>() {
+class ProductDetailsPresenter(private val productRepository: ProductRepository) : MvpPresenter<ProductDetailsView>() {
 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
     private var isDataLoaded: Boolean = false
@@ -21,7 +21,7 @@ class ProductDetailsPresenter(val productRepository: ProductRepository) : MvpPre
         mCompositeDisposable.dispose()
     }
 
-    public fun loadProduct(productId: Int) {
+    fun loadProduct(productId: Int) {
         if (isDataLoaded) return
 
         isDataLoaded = true

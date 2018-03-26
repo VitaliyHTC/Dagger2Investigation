@@ -23,6 +23,8 @@ class App : Application(), HasActivityInjector {
 
     companion object {
         private lateinit var sInstance: App
+
+        fun getInstance() = sInstance
     }
 
     override fun onCreate() {

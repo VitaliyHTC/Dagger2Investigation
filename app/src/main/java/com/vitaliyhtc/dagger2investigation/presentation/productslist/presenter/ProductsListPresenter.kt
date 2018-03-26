@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 @InjectViewState
-class ProductsListPresenter(val productRepository: ProductRepository) : MvpPresenter<ProductsListView>() {
+class ProductsListPresenter(private val productRepository: ProductRepository) : MvpPresenter<ProductsListView>() {
 
     private val LCBO_FIRST_PAGE_INDEX = 0x01
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()

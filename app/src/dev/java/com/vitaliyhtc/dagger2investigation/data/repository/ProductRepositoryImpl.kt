@@ -1,22 +1,25 @@
 package com.vitaliyhtc.dagger2investigation.data.repository
 
 import com.vitaliyhtc.dagger2investigation.BuildConfig.LCBO_API_ACCESS_KEY
-import com.vitaliyhtc.dagger2investigation.data.model.mapper.ProductMapper
+import com.vitaliyhtc.dagger2investigation.data.db.AppDatabase
 import com.vitaliyhtc.dagger2investigation.data.model.mapper.ProductsMapper
-import com.vitaliyhtc.dagger2investigation.data.model.response.ProductResult
 import com.vitaliyhtc.dagger2investigation.data.model.response.ProductsResult
 import com.vitaliyhtc.dagger2investigation.data.rest.ApiInterface
 import com.vitaliyhtc.dagger2investigation.domain.ProductRepository
 import com.vitaliyhtc.dagger2investigation.domain.model.Product
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 
-class ProductRepositoryImpl(private val apiInterface: ApiInterface) : ProductRepository {
+class ProductRepositoryImpl(private val apiInterface: ApiInterface,
+                            appDatabase: AppDatabase) : ProductRepository {
 
     private val productsPerPage: Int = 40
     private val productsWhereNot: String = "is_dead"
 
-    private val mProductMapper: ProductMapper = ProductMapper()
+    //private val mProductMapper: ProductMapper = ProductMapper()
     private val mProductsMapper: ProductsMapper = ProductsMapper()
+
+    private val productDao = appDatabase.productDao()
 
 
     override fun getProducts(page: Int): Single<List<Product>> {
@@ -29,15 +32,12 @@ class ProductRepositoryImpl(private val apiInterface: ApiInterface) : ProductRep
                 )
                 .map(ProductsResult::result)
                 .map(mProductsMapper)
+                .doOnSuccess { products: List<Product> -> productDao.insertAll(products) }
     }
 
     override fun getOneProduct(productId: Int): Single<Product> {
-        return apiInterface
-                .getOneProduct(
-                        productId,
-                        LCBO_API_ACCESS_KEY
-                )
-                .map(ProductResult::result)
-                .map(mProductMapper)
+        return productDao.getProductById(productId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
     }
 }

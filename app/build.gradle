@@ -85,13 +85,15 @@ dependencies {
     implementation "com.jakewharton:butterknife:$butterknifeVersion"
     kapt "com.jakewharton:butterknife-compiler:$butterknifeVersion"
 
-    //moxy
+    // moxy
     implementation "com.arello-mobile:moxy:$moxyVersion"
     implementation "com.arello-mobile:moxy-app-compat:$moxyVersion"
     kapt "com.arello-mobile:moxy-compiler:$moxyVersion"
 
-    // room. ???
-    //kapt "android.arch.persistence.room:compiler:$roomCompilerVersion"
+    // room
+    implementation "android.arch.persistence.room:runtime:$roomVersion"
+    implementation "android.arch.persistence.room:rxjava2:$roomVersion"
+    kapt "android.arch.persistence.room:compiler:$roomVersion"
 
     // test
     testImplementation "junit:junit:$junitVersion"
