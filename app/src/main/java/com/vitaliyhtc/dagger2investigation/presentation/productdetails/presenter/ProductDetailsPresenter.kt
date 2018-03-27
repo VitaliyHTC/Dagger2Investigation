@@ -16,6 +16,8 @@ class ProductDetailsPresenter(private val productRepository: ProductRepository) 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
     private var isDataLoaded: Boolean = false
 
+    private var mProduct: Product? = null
+
     override fun onDestroy() {
         super.onDestroy()
         mCompositeDisposable.dispose()
@@ -39,12 +41,20 @@ class ProductDetailsPresenter(private val productRepository: ProductRepository) 
     }
 
     private fun onProductLoaded(product: Product) {
+        mProduct = product
         viewState.showProduct(product)
     }
 
     private fun loadProductsError(throwable: Throwable) {
         Timber.e(throwable)
         viewState.loadProductsError(throwable)
+    }
+
+    fun onFavoriteStatusChange(isFavorite: Boolean) {
+        if (mProduct != null) {
+            mProduct!!.is_favorite = isFavorite
+            productRepository.updateProduct(mProduct!!)
+        }
     }
 
 }

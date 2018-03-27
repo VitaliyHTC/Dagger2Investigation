@@ -68,9 +68,19 @@ class ProductDetailsActivity : BaseActivity(), ProductDetailsView {
         product_value_id.text = product.id.toString()
         product_value_price_in_cents.text = product.price_in_cents.toString()
         product_value_regular_price_in_cents.text = product.regular_price_in_cents.toString()
+
+        cb_favorite.isChecked = product.is_favorite
+
+        initIsFavoriteCheckboxListener()
     }
 
     override fun loadProductsError(t: Throwable) {
         toastShort("ERROR: ${t.message}")
+    }
+
+    private fun initIsFavoriteCheckboxListener() {
+        cb_favorite.setOnCheckedChangeListener { _, isChecked ->
+            mProductDetailsPresenter.onFavoriteStatusChange(isChecked)
+        }
     }
 }

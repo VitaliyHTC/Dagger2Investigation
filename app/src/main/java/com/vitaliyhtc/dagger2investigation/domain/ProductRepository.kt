@@ -8,4 +8,6 @@ interface ProductRepository {
     fun getProducts(page: Int): Single<List<Product>>
 
     fun getOneProduct(productId: Int): Single<Product>
+
+    fun updateProduct(product: Product)
 }

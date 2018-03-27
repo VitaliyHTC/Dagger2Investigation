@@ -7,6 +7,7 @@ import com.vitaliyhtc.dagger2investigation.data.model.response.ProductsResult
 import com.vitaliyhtc.dagger2investigation.data.rest.ApiInterface
 import com.vitaliyhtc.dagger2investigation.domain.ProductRepository
 import com.vitaliyhtc.dagger2investigation.domain.model.Product
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
@@ -39,5 +40,14 @@ class ProductRepositoryImpl(private val apiInterface: ApiInterface,
         return productDao.getProductById(productId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
+    }
+
+    override fun updateProduct(product: Product) {
+        Completable.fromAction {
+            productDao.update(product)
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe()
     }
 }
