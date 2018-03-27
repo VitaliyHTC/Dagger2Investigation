@@ -8,7 +8,7 @@ interface ProductRepository {
 
     fun getProducts(page: Int): Single<List<Product>>
 
-    fun getProductsListener(lifecycleOwner: LifecycleOwner, listener: (products: List<Product>) -> Unit)
+    fun subscribeForProductsUpdates(lifecycleOwner: LifecycleOwner, listener: (products: List<Product>) -> Unit)
 
     fun getOneProduct(productId: Int): Single<Product>
 

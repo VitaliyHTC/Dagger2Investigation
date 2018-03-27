@@ -38,8 +38,8 @@ class ProductRepositoryImpl(private val apiInterface: ApiInterface,
                 .doOnSuccess { products: List<Product> -> productDao.insertAll(products) }
     }
 
-    override fun getProductsListener(lifecycleOwner: LifecycleOwner, listener: (products: List<Product>) -> Unit) {
-        productDao.getAllListener().observe(lifecycleOwner, Observer<List<Product>> { if (it != null) listener.invoke(it) })
+    override fun subscribeForProductsUpdates(lifecycleOwner: LifecycleOwner, listener: (products: List<Product>) -> Unit) {
+        productDao.getAllLiveData().observe(lifecycleOwner, Observer<List<Product>> { if (it != null) listener.invoke(it) })
     }
 
     override fun getOneProduct(productId: Int): Single<Product> {

@@ -13,7 +13,7 @@ interface ProductDao {
     fun getAll(): Single<List<Product>>
 
     @Query("SELECT * from products")
-    fun getAllListener(): LiveData<List<Product>>
+    fun getAllLiveData(): LiveData<List<Product>>
 
     @Query("SELECT * from products where id = :id")
     fun getProductById(id: Int): Single<Product>

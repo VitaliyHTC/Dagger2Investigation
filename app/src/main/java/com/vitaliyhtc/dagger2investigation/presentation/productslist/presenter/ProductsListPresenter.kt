@@ -56,7 +56,7 @@ class ProductsListPresenter(private val productRepository: ProductRepository) : 
     }
 
     fun getProductsListener(lifecycleOwner: LifecycleOwner) {
-        productRepository.getProductsListener(lifecycleOwner) {
+        productRepository.subscribeForProductsUpdates(lifecycleOwner) {
             viewState.updateProductsResult(it)
         }
     }

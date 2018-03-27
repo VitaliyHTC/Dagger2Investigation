@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.list_item_product.view.*
 class ProductsListAdapter : RecyclerView.Adapter<ProductsListAdapter.ProductsListViewHolder>() {
 
     private val mProducts: ArrayList<Product> = ArrayList()
-    //private var mOnProductClickListener: OnProductClickListener? = null
 
     private var mOnProductClickListener: ((id: Int) -> Unit) = {}
 
@@ -74,11 +73,10 @@ class ProductsListAdapter : RecyclerView.Adapter<ProductsListAdapter.ProductsLis
                     .placeholder(R.drawable.ic_list_item_bg)
                     .error(R.drawable.ic_broken_image)
                     .into(image)
-            if (product.is_favorite) {
-                imageFavorite.setImageDrawable(mContext.resources.getDrawable(R.drawable.ic_star_black_24dp))
-            } else {
-                imageFavorite.setImageDrawable(mContext.resources.getDrawable(R.drawable.ic_star_border_black_24dp))
-            }
+
+            imageFavorite.setImageDrawable(mContext.resources.getDrawable(
+                    if (product.is_favorite) R.drawable.ic_star_black_24dp else R.drawable.ic_star_border_black_24dp
+            ))
         }
     }
 
