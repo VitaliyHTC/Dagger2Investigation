@@ -55,6 +55,7 @@ class ProductsListAdapter : RecyclerView.Adapter<ProductsListAdapter.ProductsLis
         private val mContext: Context = view.context
         private val title = view.item_title
         private val image = view.image_view_product_small
+        private val imageFavorite = view.iv_favorite
 
         init {
             view.setOnClickListener { mOnProductClickListener(mProducts[adapterPosition].id) }
@@ -67,6 +68,11 @@ class ProductsListAdapter : RecyclerView.Adapter<ProductsListAdapter.ProductsLis
                     .placeholder(R.drawable.ic_list_item_bg)
                     .error(R.drawable.ic_broken_image)
                     .into(image)
+            if (product.is_favorite) {
+                imageFavorite.setImageDrawable(mContext.resources.getDrawable(R.drawable.ic_star_black_24dp))
+            } else {
+                imageFavorite.setImageDrawable(mContext.resources.getDrawable(R.drawable.ic_star_border_black_24dp))
+            }
         }
     }
 
