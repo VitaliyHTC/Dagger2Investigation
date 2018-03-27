@@ -12,4 +12,5 @@ data class Product(@PrimaryKey val id: Int,
                    @ColumnInfo(name = "regular_price_in_cents") val regular_price_in_cents: Int,
                    @ColumnInfo(name = "description") val description: String?,
                    @ColumnInfo(name = "image_thumb_url") val image_thumb_url: String?,
-                   @ColumnInfo(name = "image_url") val image_url: String?)
+                   @ColumnInfo(name = "image_url") val image_url: String?,
+                   @ColumnInfo(name = "is_favorite") val is_favorite: Boolean)

@@ -20,6 +20,14 @@
                 android:layout_height="192dp"
                 android:layout_centerHorizontal="true"
                 android:contentDescription="@string/products_details_dialog_product_image" />
+
+            <CheckBox
+                android:id="@+id/cb_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_star_selector"
+                android:layout_margin="8dp"
+                />
         </RelativeLayout>
 
         <TextView

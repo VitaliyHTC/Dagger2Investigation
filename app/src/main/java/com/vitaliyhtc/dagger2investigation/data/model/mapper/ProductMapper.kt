@@ -16,7 +16,8 @@ class ProductMapper : Function<ProductRaw, Product> {
                     regular_price_in_cents,
                     description,
                     image_thumb_url,
-                    image_url
+                    image_url,
+                    false
             )
         }
     }
