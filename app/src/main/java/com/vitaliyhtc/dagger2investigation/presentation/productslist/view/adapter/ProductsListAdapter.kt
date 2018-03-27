@@ -37,6 +37,12 @@ class ProductsListAdapter : RecyclerView.Adapter<ProductsListAdapter.ProductsLis
         notifyItemInserted(itemCount - 1)
     }
 
+    fun updateProducts(products: List<Product>) {
+        mProducts.clear()
+        mProducts.addAll(products)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductsListViewHolder {
         val v: View = inflateLayout(parent, R.layout.list_item_product)
         return ProductsListViewHolder(v)

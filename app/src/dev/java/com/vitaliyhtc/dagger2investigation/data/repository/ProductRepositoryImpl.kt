@@ -1,5 +1,7 @@
 package com.vitaliyhtc.dagger2investigation.data.repository
 
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.Observer
 import com.vitaliyhtc.dagger2investigation.BuildConfig.LCBO_API_ACCESS_KEY
 import com.vitaliyhtc.dagger2investigation.data.db.AppDatabase
 import com.vitaliyhtc.dagger2investigation.data.model.mapper.ProductsMapper
@@ -34,6 +36,10 @@ class ProductRepositoryImpl(private val apiInterface: ApiInterface,
                 .map(ProductsResult::result)
                 .map(mProductsMapper)
                 .doOnSuccess { products: List<Product> -> productDao.insertAll(products) }
+    }
+
+    override fun getProductsListener(lifecycleOwner: LifecycleOwner, listener: (products: List<Product>) -> Unit) {
+        productDao.getAllListener().observe(lifecycleOwner, Observer<List<Product>> { if (it != null) listener.invoke(it) })
     }
 
     override fun getOneProduct(productId: Int): Single<Product> {

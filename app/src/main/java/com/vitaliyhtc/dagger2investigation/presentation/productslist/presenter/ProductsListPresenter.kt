@@ -1,5 +1,6 @@
 package com.vitaliyhtc.dagger2investigation.presentation.productslist.presenter
 
+import android.arch.lifecycle.LifecycleOwner
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.vitaliyhtc.dagger2investigation.domain.ProductRepository
@@ -52,6 +53,12 @@ class ProductsListPresenter(private val productRepository: ProductRepository) : 
         Timber.e(RuntimeException(throwable))
         viewState.hideLoadingInProgress()
         viewState.loadProductsError(throwable)
+    }
+
+    fun getProductsListener(lifecycleOwner: LifecycleOwner) {
+        productRepository.getProductsListener(lifecycleOwner) {
+            viewState.updateProductsResult(it)
+        }
     }
 
     fun onProductClick(productId: Int) {

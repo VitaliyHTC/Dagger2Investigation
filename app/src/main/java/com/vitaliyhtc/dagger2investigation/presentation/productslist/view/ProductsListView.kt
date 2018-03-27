@@ -10,6 +10,9 @@ interface ProductsListView : MvpView {
     @StateStrategyType(AddToEndStrategy::class)
     fun addProductsToResult(products: List<Product>)
 
+    @StateStrategyType(AddToEndStrategy::class)
+    fun updateProductsResult(products: List<Product>)
+
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun loadProductsError(t: Throwable)
 

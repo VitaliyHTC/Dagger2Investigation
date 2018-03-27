@@ -55,6 +55,12 @@ class ProductsListActivity : BaseActivity(), ProductsListView {
 
     override fun addProductsToResult(products: List<Product>) {
         mProductsListAdapter.appendToProducts(products)
+
+        mProductsListPresenter.getProductsListener(this)
+    }
+
+    override fun updateProductsResult(products: List<Product>) {
+        mProductsListAdapter.updateProducts(products)
     }
 
     override fun loadProductsError(t: Throwable) {
