@@ -10,6 +10,8 @@ interface ProductRepository {
 
     fun subscribeForProductsUpdates(lifecycleOwner: LifecycleOwner, listener: (products: List<Product>) -> Unit)
 
+    fun subscribeForProductsUpdates(listener: (products: List<Product>) -> Unit)
+
     fun getOneProduct(productId: Int): Single<Product>
 
     fun updateProduct(product: Product)

@@ -55,10 +55,14 @@ class ProductsListPresenter(private val productRepository: ProductRepository) : 
         viewState.loadProductsError(throwable)
     }
 
-    fun getProductsListener(lifecycleOwner: LifecycleOwner) {
+    fun subscribeForProductsUpdates(lifecycleOwner: LifecycleOwner) {
         productRepository.subscribeForProductsUpdates(lifecycleOwner) {
             viewState.updateProductsResult(it)
         }
+    }
+
+    fun subscribeForProductsUpdates() {
+        productRepository.subscribeForProductsUpdates { viewState.updateProductsResult(it) }
     }
 
     fun onProductClick(productId: Int) {

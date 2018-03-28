@@ -11,6 +11,7 @@ import com.vitaliyhtc.dagger2investigation.domain.ProductRepository
 import com.vitaliyhtc.dagger2investigation.domain.model.Product
 import io.reactivex.Completable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class ProductRepositoryImpl(private val apiInterface: ApiInterface,
@@ -40,6 +41,14 @@ class ProductRepositoryImpl(private val apiInterface: ApiInterface,
 
     override fun subscribeForProductsUpdates(lifecycleOwner: LifecycleOwner, listener: (products: List<Product>) -> Unit) {
         productDao.getAllLiveData().observe(lifecycleOwner, Observer<List<Product>> { if (it != null) listener.invoke(it) })
+    }
+
+    override fun subscribeForProductsUpdates(listener: (products: List<Product>) -> Unit) {
+        productDao.getAllFlowable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { products -> listener.invoke(products) }
     }
 
     override fun getOneProduct(productId: Int): Single<Product> {

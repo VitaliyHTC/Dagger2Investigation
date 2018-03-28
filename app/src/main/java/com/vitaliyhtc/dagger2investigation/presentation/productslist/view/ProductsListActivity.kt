@@ -56,7 +56,8 @@ class ProductsListActivity : BaseActivity(), ProductsListView {
     override fun addProductsToResult(products: List<Product>) {
         mProductsListAdapter.appendToProducts(products)
 
-        mProductsListPresenter.getProductsListener(this)
+        //mProductsListPresenter.subscribeForProductsUpdates(this)
+        mProductsListPresenter.subscribeForProductsUpdates()
     }
 
     override fun updateProductsResult(products: List<Product>) {

@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
 import com.vitaliyhtc.dagger2investigation.domain.model.Product
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 @Dao
@@ -14,6 +15,9 @@ interface ProductDao {
 
     @Query("SELECT * from products")
     fun getAllLiveData(): LiveData<List<Product>>
+
+    @Query("SELECT * from products")
+    fun getAllFlowable(): Flowable<List<Product>>
 
     @Query("SELECT * from products where id = :id")
     fun getProductById(id: Int): Single<Product>
