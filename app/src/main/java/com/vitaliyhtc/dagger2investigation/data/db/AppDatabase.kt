@@ -14,7 +14,7 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         val MIGRATION_1_2: Migration = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE `products` ADD `is_favorite` BOOLEAN")
+                database.execSQL("ALTER TABLE `products` ADD COLUMN `is_favorite` INTEGER NOT NULL DEFAULT 0")
             }
         }
     }
