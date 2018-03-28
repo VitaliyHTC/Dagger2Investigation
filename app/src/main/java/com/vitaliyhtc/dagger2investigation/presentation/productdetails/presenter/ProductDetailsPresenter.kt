@@ -51,9 +51,9 @@ class ProductDetailsPresenter(private val productRepository: ProductRepository) 
     }
 
     fun onFavoriteStatusChange(isFavorite: Boolean) {
-        if (mProduct != null) {
-            mProduct!!.is_favorite = isFavorite
-            productRepository.updateProduct(mProduct!!)
+        mProduct?.let {
+            it.is_favorite = isFavorite
+            productRepository.updateProduct(it)
         }
     }
 

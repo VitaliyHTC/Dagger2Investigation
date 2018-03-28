@@ -45,8 +45,6 @@ class ProductRepositoryImpl(private val apiInterface: ApiInterface,
 
     override fun subscribeForProductsUpdates(listener: (products: List<Product>) -> Unit) {
         productDao.getAllFlowable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { products -> listener.invoke(products) }
     }

@@ -1,5 +1,6 @@
 package com.vitaliyhtc.dagger2investigation.presentation.productslist.view
 
+import android.arch.lifecycle.*
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -55,6 +56,13 @@ class ProductsListActivity : BaseActivity(), ProductsListView {
 
     override fun addProductsToResult(products: List<Product>) {
         mProductsListAdapter.appendToProducts(products)
+
+        lifecycle.addObserver(object: LifecycleObserver {
+            @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
+            fun onAny(source: LifecycleOwner, event: Lifecycle.Event) {
+                Timber.e("event: $event")
+            }
+        })
 
         //mProductsListPresenter.subscribeForProductsUpdates(this)
         mProductsListPresenter.subscribeForProductsUpdates()
