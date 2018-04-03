@@ -2,6 +2,7 @@ package com.vitaliyhtc.dagger2investigation.data.repository
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
+import android.support.test.espresso.idling.CountingIdlingResource
 import com.vitaliyhtc.dagger2investigation.BuildConfig.LCBO_API_ACCESS_KEY
 import com.vitaliyhtc.dagger2investigation.data.db.AppDatabase
 import com.vitaliyhtc.dagger2investigation.data.model.mapper.ProductsMapper
@@ -25,6 +26,12 @@ class ProductRepositoryImpl(private val apiInterface: ApiInterface,
 
     private val productDao = appDatabase.productDao()
 
+    lateinit var mIdlingResource: CountingIdlingResource
+
+
+    override fun setIdlingResource(idlingResource: CountingIdlingResource) {
+        mIdlingResource = idlingResource
+    }
 
     override fun getProducts(page: Int): Single<List<Product>> {
         return apiInterface
@@ -36,17 +43,28 @@ class ProductRepositoryImpl(private val apiInterface: ApiInterface,
                 )
                 .map(ProductsResult::result)
                 .map(mProductsMapper)
-                .doOnSuccess { products: List<Product> -> productDao.insertAll(products) }
+                .doOnSuccess { products: List<Product> ->
+                    mIdlingResource.increment()
+                    productDao.insertAll(products)
+                }
     }
 
     override fun subscribeForProductsUpdates(lifecycleOwner: LifecycleOwner, listener: (products: List<Product>) -> Unit) {
-        productDao.getAllLiveData().observe(lifecycleOwner, Observer<List<Product>> { if (it != null) listener.invoke(it) })
+        productDao.getAllLiveData().observe(lifecycleOwner, Observer<List<Product>> {
+            if (it != null) {
+                listener.invoke(it)
+                mIdlingResource.decrement()
+            }
+        })
     }
 
     override fun subscribeForProductsUpdates(listener: (products: List<Product>) -> Unit) {
         productDao.getAllFlowable()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { products -> listener.invoke(products) }
+                .subscribe { products ->
+                    listener.invoke(products)
+                    mIdlingResource.decrement()
+                }
     }
 
     override fun getOneProduct(productId: Int): Single<Product> {
