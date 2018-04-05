@@ -2,6 +2,7 @@ package com.vitaliyhtc.dagger2investigation
 
 import android.support.test.espresso.Espresso
 import android.support.test.espresso.IdlingRegistry
+import android.support.test.espresso.IdlingResource
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.matcher.ViewMatchers
@@ -23,6 +24,8 @@ import org.junit.runner.RunWith
 @LargeTest
 class UiTest {
 
+    private lateinit var mIdlingResource: IdlingResource
+
     @get:Rule
     val mProductsListActivityTestRule: ActivityTestRule<ProductsListActivity> =
             ActivityTestRule(ProductsListActivity::class.java, true, true)
@@ -30,8 +33,9 @@ class UiTest {
 
     @Before
     fun initTestConditions() {
+        mIdlingResource = mProductsListActivityTestRule.activity.getCountingIdlingResource()
 
-        IdlingRegistry.getInstance().register(mProductsListActivityTestRule.activity.getCountingIdlingResource())
+        IdlingRegistry.getInstance().register(mIdlingResource)
     }
 
     @Test
@@ -50,6 +54,6 @@ class UiTest {
     @After
     fun cleanup() {
 
-        IdlingRegistry.getInstance().unregister(mProductsListActivityTestRule.activity.getCountingIdlingResource())
+        IdlingRegistry.getInstance().unregister(mIdlingResource)
     }
 }
