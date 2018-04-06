@@ -2,8 +2,6 @@ package com.vitaliyhtc.dagger2investigation.presentation.productslist.view
 
 import android.arch.lifecycle.*
 import android.os.Bundle
-import android.support.annotation.VisibleForTesting
-import android.support.test.espresso.IdlingResource
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -88,10 +86,5 @@ class ProductsListActivity : BaseActivity(), ProductsListView {
 
     override fun hideLoadingInProgress() {
         pb_progressbar.visibility = View.GONE
-    }
-
-    @VisibleForTesting
-    fun getCountingIdlingResource(): IdlingResource {
-        return mProductsListPresenter.mIdlingResource
     }
 }

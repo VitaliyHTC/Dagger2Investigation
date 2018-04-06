@@ -1,7 +1,6 @@
 package com.vitaliyhtc.dagger2investigation.presentation.productslist.presenter
 
 import android.arch.lifecycle.LifecycleOwner
-import android.support.test.espresso.idling.CountingIdlingResource
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.vitaliyhtc.dagger2investigation.domain.ProductRepository
@@ -21,13 +20,6 @@ class ProductsListPresenter(private val productRepository: ProductRepository) : 
     private var mIsDataLoaded: Boolean = false
     private var mIsInLoadingProgress: Boolean = false
 
-    val mIdlingResource: CountingIdlingResource = CountingIdlingResource("DATA_LOADER")
-
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
-        productRepository.setIdlingResource(mIdlingResource)
-    }
-
     fun loadData() {
         Timber.d("loadData: called")
         if (!mIsDataLoaded && !mIsInLoadingProgress) loadProducts(LCBO_FIRST_PAGE_INDEX)
@@ -35,9 +27,6 @@ class ProductsListPresenter(private val productRepository: ProductRepository) : 
 
     private fun loadProducts(page: Int) {
         mIsInLoadingProgress = true
-
-        mIdlingResource.increment()
-        //mIdlingResource.increment()
 
         viewState.showLoadingInProgress()
         productRepository.getProducts(page)
@@ -53,8 +42,6 @@ class ProductsListPresenter(private val productRepository: ProductRepository) : 
     private fun addProductsToResult(products: List<Product>) {
         mIsInLoadingProgress = false
         mIsDataLoaded = true
-
-        mIdlingResource.decrement()
 
         viewState.hideLoadingInProgress()
         viewState.addProductsToResult(products)

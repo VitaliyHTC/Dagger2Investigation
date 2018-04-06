@@ -2,7 +2,6 @@ package com.vitaliyhtc.dagger2investigation.data.repository
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
-import android.support.test.espresso.idling.CountingIdlingResource
 import com.google.gson.Gson
 import com.vitaliyhtc.dagger2investigation.data.db.AppDatabase
 import com.vitaliyhtc.dagger2investigation.data.model.mapper.ProductsMapper
@@ -24,11 +23,9 @@ class ProductRepositoryImpl(private val apiInterface: ApiInterface,
 
     private val mProductsMapper: ProductsMapper = ProductsMapper()
 
-    private val productDao = appDatabase.productDao()
+    private val mProductDao = appDatabase.productDao()
 
     private lateinit var mProducts: List<Product>
-
-    lateinit var mIdlingResource: CountingIdlingResource
 
     init {
         val json = App.getInstance().applicationContext.readStringFromAsset(mockProductsAssetName)
@@ -37,41 +34,32 @@ class ProductRepositoryImpl(private val apiInterface: ApiInterface,
 
         try {
             mProducts = mProductsMapper.apply(productsResult.result)
+
+            Completable.fromAction { mProductDao.insertAll(mProducts) }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .subscribe()
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    override fun setIdlingResource(idlingResource: CountingIdlingResource) {
-        mIdlingResource = idlingResource
-
-        mIdlingResource.increment()
-        Completable.fromAction { productDao.insertAll(mProducts) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe()
-    }
-
     override fun subscribeForProductsUpdates(lifecycleOwner: LifecycleOwner, listener: (products: List<Product>) -> Unit) {
-        productDao.getAllLiveData().observe(lifecycleOwner, Observer<List<Product>> {
+        mProductDao.getAllLiveData().observe(lifecycleOwner, Observer<List<Product>> {
             if (it != null) {
                 listener.invoke(it)
-                mIdlingResource.decrement()
             }
         })
     }
 
     override fun subscribeForProductsUpdates(listener: (products: List<Product>) -> Unit) {
-        productDao.getAllFlowable()
+        mProductDao.getAllFlowable()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { products ->
-                    listener.invoke(products)
-                    mIdlingResource.decrement()
-                }
+                .subscribe { products -> listener.invoke(products) }
     }
 
     override fun updateProduct(product: Product) {
-        Completable.fromAction { productDao.update(product) }
+        Completable.fromAction { mProductDao.update(product) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe()
