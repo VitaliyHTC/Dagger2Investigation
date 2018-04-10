@@ -21,7 +21,7 @@ import javax.inject.Provider
 class ProductDetailsActivity : BaseActivity(), ProductDetailsView {
 
     companion object {
-        private const val KEY_PRODUCT_ID = "KEY_PRODUCT_ID"
+        const val KEY_PRODUCT_ID = "KEY_PRODUCT_ID"
 
         fun newInstance(context: Context, productId: Int) {
             val intent = Intent(context, ProductDetailsActivity::class.java)
